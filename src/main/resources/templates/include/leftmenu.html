@@ -1,0 +1,33 @@
+<#macro leftmenu>
+<ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
+    <#if treeMenus??>
+        <#list treeMenus as vo>
+            <li class="nav-item <#if res?? && vo.menuConfig.id==res> active </#if>">
+                <a href="#" class="nav-link">
+                    <i class="fa ${(vo.menuConfig.icon)!}"></i>
+                    <p>
+                        <span>${(vo.menuConfig.name)!}</span>
+                        <span class="badge badge-info right">${(vo.children?size)!}</span>
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <#list vo.children as ch>
+                        <#assign m_url = ch.menuConfig.url>
+                        <li class="nav-item">
+                            <#if m_url?index_of("?")=-1>
+                                <a class="nav-link" href="${m_url + '?p=' +  vo.menuConfig.id + '&t=' + ch.menuConfig.id}">
+                            <#else>
+                                <a class="nav-link" href="${m_url + '&p=' +  vo.menuConfig.id + '&t=' + ch.menuConfig.id}">
+                            </#if>
+                                    <i class="fa ${(ch.menuConfig.icon)!} nav-icon"></i>
+                                    <p>${(ch.menuConfig.name)!}</p>
+                                </a>
+                        </li>
+                    </#list>
+                </ul>
+            </li>
+        </#list>
+    </#if>
+</ul>
+</#macro>

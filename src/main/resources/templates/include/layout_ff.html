@@ -1,0 +1,44 @@
+<#include "/include/header.html">
+<#include "/include/footer.html">
+
+<#include "/include/sidebar.html">
+<#include "/include/navibar.html">
+
+<#include "/include/scripts.html">
+
+<#macro html>
+<html>
+    <@header '趣味科技' '欢迎您~'></@header>
+    <body class="sidebar-mini elevation-4 layout-footer-fixed" style="height: auto; font-size: 16px!important;">
+        <div class="wrapper">
+            <@navibar></@navibar>
+            <@sidebar></@sidebar>
+            <div class="content-wrapper iframe-mode" data-widget="iframe" style="overflow: auto;">
+                <div class="nav navbar navbar-expand-lg navbar-light border-bottom p-0">
+                    <a class="nav-link bg-light" href="#" data-widget="iframe-close"><i class="fas fa-window-close"></i></a>
+                    <a class="nav-link bg-light" href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left"></i></a>
+                    <ul class="navbar-nav" role="tablist">
+                        <li class="nav-item active" role="presentation"><a class="nav-link active" data-toggle="row" id="tab-index" href="#panel-index" role="tab" aria-controls="panel-index" aria-selected="true">首页</a></li>
+                    </ul>
+                    <a class="nav-link bg-light" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a>
+                    <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="panel-index" role="tabpanel" aria-labelledby="tab-index"><iframe src="main" style="height: 671px;"></iframe></div>
+                    <div class="tab-empty">
+                        <h2 class="display-4"></h2>
+                    </div>
+                    <div class="tab-loading">
+                        <h2 class="display-4"></h2>
+                    </div>
+                </div>
+            </div>
+            <@footer></@footer>
+        </div>
+    </body>
+    <@scripts "/${rootContext}/app/js/main.js"></@scripts>
+    <script>
+
+    </script>
+</html>
+</#macro>

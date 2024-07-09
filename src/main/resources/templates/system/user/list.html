@@ -1,0 +1,133 @@
+<#include "/include/header.html">
+<#include "/include/scripts.html">
+<#import "/spring.ftl" as spring/>
+<html>
+<@header '趣味科技' '欢迎您~'></@header>
+<body class="gray-bg">
+    <div class="wrapper" style="overflow: scroll;">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <form action="/system/user/list/1" method="post" class="form-inline">
+                                                <div class="box-header">
+                                                    <div class="input-group">
+                                                        <@shiro.hasPermission name="addUser">
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:void(0);" data-url="/system/user/add" data-title="<@spring.message code='system.user.list.createUser'/>" data-width="700" data-height="450">
+                                                                <i class="fa fa-plus"></i>
+                                                                <@spring.message code='system.user.list.createUser'/>
+                                                            </a>
+                                                        </@shiro.hasPermission>
+                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
+                                                        <div class="input-group">
+                                                            <button class="btn btn-default btn-flat" type="submit">
+                                                                <i class="fa fa-search"></i></button>
+                                                            <a href="/system/user/list/1" class="btn btn-default">
+                                                                <i class="fa fa-sync" style="margin-top:6px;"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="row justify-content-end">
+                                                <div class="col-auto">
+                                                    <div class="input-group">
+                                                        <button type="button" class="btn btn-info btn-flat" onclick="exportTo('用户数据');">
+                                                            <i class="fa fa-file-excel-o"></i> 导出
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered table-hover dataTable dtr-inline">
+                                                <tr>
+                                                    <th>
+                                                        <input type="checkbox" class="minimal checkbox-toolbar">
+                                                        <@spring.message code='system.user.list.rowNo'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.user.list.userName'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.user.list.description'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.user.list.creationTime'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.user.list.department'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.user.list.status'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.user.list.action'/>
+                                                    </th>
+                                                </tr>
+                                                <#list pageData.getRecords() as user>
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" class="minimal checkbox-item">
+                                                                ${((pageData.current-1)*pageData.size + user_index+1)!}
+                                                            </label>
+                                                        </td>
+                                                        <td>${(user.user_name)!}</td>
+                                                        <td>${(user.dept_desc)!'--'}</td>
+                                                        <td>
+                                                            ${(user.create_time)!}
+                                                        </td>
+                                                        <td>${(user.dept_name)!'--'}</td>
+                                                        <td>
+                                                            <#if user.status=='1'>生效中<#else>已停用</#if>
+                                                        </td>
+                                                        <td>
+                                                            <@shiro.hasPermission name="editUser">
+                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:;"
+                                                                   data-url="/system/user/edit/${(user.id)!}"
+                                                                   data-title="编辑用户" data-width="700" data-height="450">编辑</a>
+                                                            </@shiro.hasPermission>
+                                                            <@shiro.hasPermission name="deleteUser">
+                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax"
+                                                                   data-submit-url="/system/user/delete?id=${(user.id)!}"
+                                                                   data-confirm="您确定要删除该条记录吗?">删除</a>
+                                                            </@shiro.hasPermission>
+                                                        </td>
+                                                    </tr>
+                                                </#list>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <#include "/include/paginateBar.html" />
+                                            <@paginate pageData=pageData actionUrl="/system/user/list/"
+                                            urlParas="?search=${search!}&daterange=${daterange!}" />
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <#include "/include/paginate.html" />
+                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages()
+                                            actionUrl="/system/user/list/" urlParas="?search=${search!}&pageSize=${pageSize!}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</html>

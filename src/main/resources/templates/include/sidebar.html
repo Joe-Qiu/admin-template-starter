@@ -1,0 +1,33 @@
+<#include "/include/leftmenu.html">
+
+<#macro sidebar>
+<aside class="main-sidebar sidebar-dark-light elevation-4">
+    <a href="javascript:void(0);" class="brand-link">
+        <img src="/${rootContext}/logo/trademark.png" alt="Treeview" class="brand-image" style="opacity: .8">
+        <span class="brand-text font-weight-light">趣味科技</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-2 pb-2 mb-2 d-flex">
+            <div class="image">
+                <img src="${currUser.avatar!'/${rootContext}/img/default.png'}" class="img-circle elevation-2">
+            </div>
+            <div class="info">
+                <a href="javascript:void(0);" class="d-block">${(currUser.nickName)!}</a>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search" data-min-length="1">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <@leftmenu></@leftmenu>
+        </nav>
+    </div>
+</aside>
+</#macro>

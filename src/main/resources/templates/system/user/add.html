@@ -1,0 +1,75 @@
+<#include "/include/layout_ff.html">
+<@header>
+</@header>
+<body>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body"/>
+            <form class="form-horizontal layui-form layui-form-pane" action="/system/user/doAdd" onsubmit="return false;">
+                <div class="box-body">
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label for="uname" class="col-sm-1 control-label">用户</label>
+                            <div class="col-sm-11">
+                                <input type="text" id="uname" name="userName" class="form-control" placeholder="请输入用户名" lay-verify="required|name|check" check-url="/system/user/checkName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label class="col-sm-1 control-label">部门</label>
+                            <div class="col-sm-11">
+                                <select name="deptId" class="form-control select2" style="width: 100%;" lay-verify="required">
+                                    <#list deptList as dept>
+                                        <option value="${(dept.id)!}">${(dept.deptName)!}</option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label class="col-sm-1 control-label">描述</label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control" name="remark" rows="3" placeholder="请输入描述，最多300个字符 ..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label class="col-sm-1 control-label">状态</label>
+                            <div class="col-sm-11">
+                                <label>
+                                    <input name="status" type="radio" class="minimal" lay-ignore checked value="1">启用
+                                </label>
+                                <label>
+                                    <input name="status" type="radio" class="minimal" lay-ignore value="-1">禁用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label class="col-sm-1 control-label">角色</label>
+                            <div class="col-sm-11">
+                                <#list roleList as role>
+                                    <label title="${(role.roleDesc)!}">
+                                        <input type="checkbox" name="roleIds" class="minimal" value="${(role.id)!}" lay-ignore >
+                                        ${(role.roleName)!}
+                                    </label>
+                                </#list>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" name="save" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 提 交</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</body>

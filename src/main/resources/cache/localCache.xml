@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="local" updateCheck="false">
+    <!-- 磁盘缓存位置 -->
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="600"
+            overflowToDisk="false">
+    </defaultCache>
+
+    <cache name="permissionCache"
+           maxElementsInMemory="10000"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="600"
+           eternal="false"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU">
+    </cache>
+
+    <cache name="menuCache"
+           maxElementsInMemory="10000"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="600"
+           eternal="false"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU">
+    </cache>
+</ehcache>

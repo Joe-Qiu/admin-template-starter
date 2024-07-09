@@ -1,0 +1,56 @@
+<#include "/include/layout_ff.html">
+<@header>
+</@header>
+<body>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body"/>
+        <form class="form-horizontal layui-form layui-form-pane" action="/system/menu/doEdit" onsubmit="return false;">
+            <input type="hidden" value="${menuConfig.id}" name="id">
+            <div class="box-body">
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label for="uname" class="col-sm-1 control-label">编码</label>
+                        <div class="col-sm-11">
+                            <input type="text" name="code" class="form-control" placeholder="请输入编码,如05" value="${(menuConfig.code)!}" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-1 control-label">目录名称</label>
+                        <div class="col-sm-11">
+                            <input type="text" name="name" class="form-control" value="${(menuConfig.name)!}" placeholder="请输入目录名称" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-1 control-label">排序</label>
+                        <div class="col-sm-11" style="padding-top:7px">
+                            <input type="text" name="sort" class="form-control" value="${(menuConfig.sort)!}" placeholder="请输入排序" lay-verify="required|number">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-1 control-label">图标</label>
+                        <div class="col-sm-11" style="padding-top:7px">
+                            <input type="text" name="icon" class="form-control" value="${(menuConfig.icon)!}" placeholder="请输入图标,如:fa-user">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label"></label>
+                    <div class="col-sm-11">
+                        <button type="submit" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 提 交</button>
+                        <a class="btn btn-default" href="javascript:parent.layer.closeAll('iframe');"><i class="fa fa-close"></i> 取消</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</section>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</body>

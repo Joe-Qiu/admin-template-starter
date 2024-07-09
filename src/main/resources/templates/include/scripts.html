@@ -1,0 +1,74 @@
+<#macro scripts entrance>
+    <script src="/${rootContext}/plugins/jquery/jquery.min.js"></script>
+    <script src="/${rootContext}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/${rootContext}/plugins/adminlte/js/adminlte.js"></script>
+    <script>
+        $(document).ready(function() {
+            let toggleSwitch = $('.theme-switch input[type="checkbox"]');
+            let currentTheme = localStorage.getItem('theme');
+            let header = $('.main-header');
+            let navbar = $('.navbar');
+
+            if (currentTheme === 'dark') {
+                if (! $('body').hasClass('dark-mode')) {
+                    $('body').addClass('dark-mode');
+                }
+                if (header.hasClass('navbar-light')) {
+                    header.removeClass('navbar-light').addClass('navbar-dark');
+                }
+
+                if (navbar.hasClass('navbar-light')) {
+                    navbar.removeClass('navbar-light').addClass('navbar-dark');
+                }
+
+                toggleSwitch.prop('checked', true);
+            }
+
+            toggleSwitch.change(function() {
+                if ($(this).prop('checked')) {
+                    if (!$('body').hasClass('dark-mode')) {
+                        $('body').addClass('dark-mode');
+                    }
+                    if (header.hasClass('navbar-light')) {
+                        header.removeClass('navbar-light').addClass('navbar-dark');
+                    }
+
+                    if (navbar.hasClass('navbar-light')) {
+                        navbar.removeClass('navbar-light').addClass('navbar-dark');
+                    }
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    if ($('body').hasClass('dark-mode')) {
+                        $('body').removeClass('dark-mode');
+                    }
+                    if (header.hasClass('navbar-dark')) {
+                        header.removeClass('navbar-dark').addClass('navbar-light');
+                    }
+
+                    if (navbar.hasClass('navbar-dark')) {
+                        navbar.removeClass('navbar-dark').addClass('navbar-light');
+                    }
+                    localStorage.setItem('theme', 'light');
+                }
+
+                let iframes = $('iframe');
+                iframes.each(function(index) {
+                    let $this = $(this);
+                    let $unit = $this.contents().find('body');
+                    if($unit) {
+                        if (toggleSwitch.prop('checked')) {
+                            if (!$unit.hasClass('dark-mode')) {
+                                $unit.addClass('dark-mode');
+                            }
+                        } else {
+                            if ($unit.hasClass('dark-mode')) {
+                                $unit.removeClass('dark-mode');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="/${rootContext}/plugins/requirejs/require.js" defer async="true" data-main=${entrance!}></script>
+</#macro>

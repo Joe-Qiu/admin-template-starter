@@ -1,0 +1,66 @@
+<#include "/include/header.html">
+<#include "/include/scripts.html">
+<html>
+<@header '趣味科技' '欢迎您~'></@header>
+<body class="gray-bg">
+    <div class="wrapper" style="overflow: scroll;">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered table-hover dataTable dtr-inline">
+                                                <tr>
+                                                    <th>行号</th>
+                                                    <th>日志操作</th>
+                                                    <th>用户</th>
+                                                    <th>地址</th>
+                                                    <th>时间</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                <#list pageData.getRecords() as log>
+                                                    <tr>
+                                                        <td>${((pageData.current-1)*pageData.size +log_index+1)!}</td>
+                                                        <td>${(log.details)!}</td>
+                                                        <td>${(log.username)!}</td>
+                                                        <td>${(log.url)!'--'}</td>
+                                                        <td>${(log.createTime?string('yyyy/MM/dd HH:mm:ss'))!}</td>
+                                                        <td>
+                                                            <a class="btn btn-xs dialog"
+                                                               data-title="参数"
+                                                               data-url="/system/log/params/${log.id}">查看参数</a>
+                                                        </td>
+                                                    </tr>
+                                                </#list>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <#include "/include/paginateBar.html" />
+                                            <@paginate pageData=pageData actionUrl="/system/log/list/"
+                                            urlParas="?search=${search!}&daterange=${daterange!}" />
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <#include "/include/paginate.html" />
+                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages()
+                                            actionUrl="/system/log/list/"
+                                            urlParas="?search=${search!}&daterange=${daterange!}&pageSize=${pageSize!}"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</html>

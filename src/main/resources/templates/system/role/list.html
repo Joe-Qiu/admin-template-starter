@@ -1,0 +1,116 @@
+<#include "/include/header.html">
+<#include "/include/scripts.html">
+<html>
+<@header '趣味科技' '欢迎您~'></@header>
+<body class="gray-bg">
+    <div class="wrapper" style="overflow: scroll;">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <form action="/system/role/list/1" method="post" class="form-inline">
+                                                <div class="box-header">
+                                                    <div class="input-group">
+                                                        <@shiro.hasPermission name="addRole">
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;" data-url="/system/role/add" data-title="创建新角色"><i class="fa fa-plus"></i>创建新角色</a>
+                                                        </@shiro.hasPermission>
+                                                        <@shiro.hasPermission name="deleteBatchRole">
+                                                            <a class="btn btn-danger btn-flat " delete-batch-url="/system/role/deleteBatch"><i class="fa fa-remove"></i>批量删除选中</a>
+                                                        </@shiro.hasPermission>
+                                                        <div class="input-group">
+                                                            <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
+                                                            <button class="btn btn-default btn-flat" type="submit">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                            <a href="/system/role/list/1" class="btn btn-default">
+                                                                <i class="fa fa-sync" style="margin-top:6px;"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="row justify-content-end">
+                                                <div class="col-auto">
+                                                    <div class="input-group pull-right">
+                                                        <button type="button" class="btn btn-info btn-flat" onclick="exportTo('角色数据');"><i class="fa fa-file-excel-o"></i>导出</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table class="table table-bordered table-hover dataTable dtr-inline">
+                                                <tr>
+                                                    <th><input value="root" type="checkbox" class="minimal checkbox-toolbar"> 行号</th>
+                                                    <th>角色名称</th>
+                                                    <th>描述</th>
+                                                    <th>创建时间</th>
+                                                    <th>状态</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                <#list pageData.getRecords() as role>
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                <input value="${role.id}" name="roleState" type="checkbox" class="minimal checkbox-item">
+                                                                ${((pageData.current-1)*pageData.size +role_index+1)!}
+                                                            </label>
+                                                        </td>
+                                                        <td>${(role.roleName)!}
+                                                            <a class="btn btn-xs dialog"
+                                                               data-wdith="800"
+                                                               data-title="所属角色[${(role.roleName)!}]的用户列表"
+                                                               data-url="/system/role/getUsers?roleId=${role.id}"><span>【查看用户】</span>
+                                                            </a>
+                                                        </td>
+                                                        <td>${(role.roleDesc)!'--'}</td>
+                                                        <td>${(role.createTime?string('yyyy/MM/dd HH:mm:ss'))!'--'}</td>
+                                                        <td><#if role.state==1>启用<#else><font color="red">禁用</font></#if></td>
+                                                        <td>
+                                                            <@shiro.hasPermission name="authRole">
+                                                                <a class="btn btn-success btn-xs dialog" href="javascript:;" data-url="/system/role/auth/${(role.id)!}" data-title="授权" data-toggle="tooltip" title="授权" data-placement="bottom">授权</a>
+                                                            </@shiro.hasPermission>
+                                                            <@shiro.hasPermission name="editRole">
+                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:;" data-url="/system/role/edit/${(role.id)!}" data-title="编辑" data-toggle="tooltip" title="编辑" data-placement="bottom">编辑</a>
+                                                            </@shiro.hasPermission>
+                                                            <@shiro.hasPermission name="deleteRole">
+                                                                <a class="btn btn-danger btn-xs" data-toggle="tooltip" title="删除" data-placement="bottom"
+                                                                   data-tiggle="ajax"
+                                                                   data-submit-url="/system/role/delete?id=${(role.id)!}"
+                                                                   data-confirm="您确定要删除该条记录吗?">删除</a>
+                                                            </@shiro.hasPermission>
+                                                        </td>
+                                                    </tr>
+                                                </#list>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <#include "/include/paginateBar.html" />
+                                            <@paginate pageData=pageData actionUrl="/system/role/list/" urlParas="?search=${search!}&daterange=${daterange!}"/>
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <#include "/include/paginate.html" />
+                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages() actionUrl="/system/role/list/" urlParas="?search=${search!}&pageSize=${pageSize!}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</html>

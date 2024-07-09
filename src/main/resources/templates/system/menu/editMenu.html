@@ -1,0 +1,79 @@
+<#include "/include/layout_ff.html">
+<@header>
+</@header>
+<body>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body"/>
+        <form class="form-horizontal layui-form layui-form-pane" action="/system/menu/doEdit" onsubmit="return false;">
+            <input type="hidden" value="${menuConfig.id}" name="id">
+            <div class="box-body">
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-3 control-label">父级菜单</label>
+                        <div class="col-sm-9">
+                            <select name="pid" class="form-control select2" style="width: 100%;" lay-verify="required" lay-ignore>
+                                <#list list as m>
+                                    <option value="${(m.id)!}" ${(m.id==menuConfig.pid)?string('selected="selected"','')}>
+                                        ${(m.code)!}-${(m.name)!}
+                                    </option>
+                                </#list>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-3 control-label">编码</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="code" class="form-control" value="${(menuConfig.code)!}" placeholder="请输入编码" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-3 control-label">菜单名称</label>
+                        <div class="col-sm-9" style="padding-top:7px">
+                            <input type="text" name="name" value="${(menuConfig.name)!}" class="form-control" placeholder="请输入菜单名称" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-3 control-label">菜单URL</label>
+                        <div class="col-sm-9" style="padding-top:7px">
+                            <input type="text" name="url" class="form-control" value="${(menuConfig.url)!}" placeholder="请输入菜单URL" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-3 control-label">排序</label>
+                        <div class="col-sm-9" style="padding-top:7px">
+                            <input type="text" name="sort" class="form-control" value="${(menuConfig.sort)!}" placeholder="请输入排序" lay-verify="required|number">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex;">
+                        <label class="col-sm-3 control-label">图标&nbsp;&nbsp;<i class="fa ${(menuConfig.icon)!}"></i>
+                        </label>
+                        <div class="col-sm-9" style="padding-top:7px">
+                            <input type="text" name="icon" class="form-control" value="${(menuConfig.icon)!}" placeholder="请输入图标,如:fa-user">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"></label>
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 提 交</button>
+                        <a class="btn btn-default" href="javascript:parent.layer.closeAll('iframe');"><i class="fa fa-close"></i> 取消</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</section>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</body>

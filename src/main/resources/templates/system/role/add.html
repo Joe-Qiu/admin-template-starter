@@ -1,0 +1,50 @@
+<#include "/include/layout_ff.html">
+<@header>
+</@header>
+<body>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body"/>
+            <form class="form-horizontal layui-form layui-form-pane" action="/system/role/doAdd" onsubmit="return false;">
+                <div class="box-body">
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label for="uname" class="col-sm-1 control-label">角色</label>
+                            <div class="col-sm-11">
+                                <input type="text" id="uname" name="roleName" class="form-control" placeholder="请输入角色名" lay-verify="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label class="col-sm-1 control-label">描述</label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control" name="roleDesc" rows="3" placeholder="请输入描述，最多300个字符 ..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:flex;">
+                            <label class="col-sm-1 control-label">状态</label>
+                            <div class="col-sm-11" style="padding-top:7px">
+                                <label>
+                                    <input name="roleState" type="radio" class="minimal" checked value="1" lay-ignore> 启用
+                                </label>
+                                <label>
+                                    <input name="roleState" type="radio" class="minimal" value="-1" lay-ignore> 禁用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="button" name="save" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 提 交</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</body>

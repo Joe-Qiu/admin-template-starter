@@ -1,0 +1,23 @@
+<#macro header title="" subtitle="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>${title!} | ${subtitle!}</title>
+        <link rel="shortcut icon" href="/${rootContext}/logo/favicon.ico"/>
+        <link rel="stylesheet" href="/${rootContext}/plugins/fontawesome-free/css/all.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/ionicons/css/ionicons.min.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/icheck-bootstrap/icheck-bootstrap.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/adminlte/css/adminlte.min.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/pace-progress/themes/blue/pace-theme-minimal.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="/${rootContext}/app/css/main.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/layui/css/layui.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/jquery/confirm/jquery-confirm.min.css">
+        <link rel="stylesheet" href="/${rootContext}/plugins/flag-icon-css/css/flag-icon.min.css">
+    </head>
+    <script>
+        window.staticContextPath = "${rootContext}";
+    </script>
+</#macro>

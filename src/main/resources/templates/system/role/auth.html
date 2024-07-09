@@ -1,0 +1,52 @@
+<#include "/include/layout_ff.html">
+<@header>
+    <style>
+        td > label {
+            padding: 3px;
+        }
+    </style>
+</@header>
+<body>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card-body"/>
+            <form action="/system/role/doAuth" method="post" class="layui-form layui-form-pane">
+                <input type="hidden" value="${(roleDefine.id)!}" name="roleId"/>
+                <div class="box">
+                    <div class="box-body">
+                        <table class="table table-bordered table-hover dataTable">
+                            <#list treeMenuAllowAccesses as vo>
+                                <tr>
+                                    <td>
+                                        <label>
+                                            <input name="mid" type="checkbox" ${(vo.allowAccess)?string('checked','')} value="${(vo.menuConfig.id)!}" class="minimal checkbox-tr" lay-ignore>
+                                            <i class="fa ${(vo.menuConfig.icon)!}"></i> ${(vo.menuConfig.name)!}
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <#list vo.children as ch>
+                                            <label>
+                                                <input name="mid" type="checkbox" ${(ch.allowAccess)?string('checked','')} value="${(ch.menuConfig.id)!}" class="minimal checkbox-td" lay-ignore>
+                                                <i class="fa ${(ch.menuConfig.icon)!}"></i>${(ch.menuConfig.name)!}
+                                            </label>&nbsp; > &nbsp;
+                                            <#list ch.children as it>
+                                                <label style="font-weight: normal;"><input name="mid" type="checkbox" ${(it.allowAccess)?string('checked','')} value="${(it.menuConfig.id)!}" class="minimal checkbox-td" lay-ignore> ${(it.menuConfig.name)!}</label>&nbsp;
+                                            </#list>
+                                            <br>
+                                        </#list>
+                                    </td>
+                                </tr>
+                            </#list>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 确认授权</button>
+                        <a class="btn btn-default" href="javascript:parent.layer.closeAll('iframe');"><i class="fa fa-angle-left"></i> 返回</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</body>

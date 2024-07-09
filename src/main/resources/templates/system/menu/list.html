@@ -1,0 +1,125 @@
+<#include "/include/header.html">
+<#include "/include/scripts.html">
+<html>
+<@header '趣味科技' '欢迎您~'></@header>
+<body class="gray-bg">
+    <div class="wrapper" style="overflow: scroll;">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <form action="/system/menu/list/1" method="post" class="form-inline">
+                                                <div class="box-header">
+                                                    <div class="input-group">
+                                                        <@shiro.hasPermission name="addMenu">
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;" data-title="创建菜单" data-url="/system/menu/add" data-width="600" data-height="400">
+                                                                <i class="fa fa-plus"></i>创建菜单
+                                                            </a>
+                                                        </@shiro.hasPermission>
+                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
+                                                        <div class="input-group">
+                                                            <button class="btn btn-default btn-flat" type="submit">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                            <a href="/system/menu/list/1" class="btn btn-default btn-flat">
+                                                                <i class="fa fa-sync" style="margin-top:6px;"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="row justify-content-end">
+                                                <div class="col-auto">
+                                                    <div class="input-group">
+                                                        <button type="button" class="btn btn-info btn-flat" onclick="exportTo('菜单数据');">
+                                                            <i class="fa fa-file-excel-o"></i>导出
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow-x: auto;">
+                                            <table class="table table-bordered table-hover dataTable dtr-inline">
+                                                    <tr>
+                                                        <th>
+                                                            <input value="root" type="checkbox" class="minimal checkbox-toolbar">
+                                                            行号
+                                                        </th>
+                                                        <th>菜单名称</th>
+                                                        <th>编码</th>
+                                                        <th>访问地址</th>
+                                                        <th>显示图标</th>
+                                                        <th>深度</th>
+                                                        <th>资源</th>
+                                                        <th>排序</th>
+                                                        <th>类型</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    <#list pageData.getRecords() as menu>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input value="${menu.id}" name="roleState" type="checkbox" class="minimal checkbox-item">
+                                                                    ${((pageData.current-1)*pageData.size +menu_index+1)!}
+                                                                </label>
+                                                            </td>
+                                                            <td>${(menu.name)!}</td>
+                                                            <td>${(menu.code)!}</td>
+                                                            <td><#if menu.deep?? && (menu.deep==1 || menu.deep==3) >--<#else><a href="${(menu.url)!'#'}" target="_blank">${(menu.url)!}</a></#if></td>
+                                                            <td>
+                                                                <i class="fa ${(menu.icon)!}"></i>
+                                                            </td>
+                                                            <td>${(menu.deep)!}</td>
+                                                            <td>${(menu.resource)!"--"}</td>
+                                                            <td>${(menu.sort)!}</td>
+                                                            <td><#if menu.deep?? && menu.deep==1 >目录<#elseif menu.deep?? && menu.deep==2>菜单<#else>功能</#if></td>
+                                                            <td>
+                                                                <@shiro.hasPermission name="editMenu">
+                                                                    <a class="btn btn-primary btn-xs dialog" href="javascript:void(0);" data-title="编辑菜单"
+                                                                       data-url="/system/menu/edit/${(menu.id)!}" data-width="700" data-height="500"
+                                                                       data-toggle="tooltip" title="编辑" data-placement="bottom">编辑
+                                                                    </a>
+                                                                </@shiro.hasPermission>
+                                                                <@shiro.hasPermission name="deleteMenu">
+                                                                    <a class="btn btn-danger btn-xs" data-toggle="tooltip" title="删除" data-placement="bottom"
+                                                                       data-tiggle="ajax"
+                                                                       data-submit-url="/system/menu/delete?id=${(menu.id)!}"
+                                                                       data-confirm="您确定要删除该条记录吗?">删除
+                                                                    </a>
+                                                                </@shiro.hasPermission>
+                                                            </td>
+                                                        </tr>
+                                                    </#list>
+                                                </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <#include "/include/paginateBar.html" />
+                                            <@paginate pageData=pageData actionUrl="/system/menu/list/" urlParas="?search=${search!}" />
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <#include "/include/paginate.html" />
+                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages()
+                                            actionUrl="/system/menu/list/" urlParas="?search=${search!}&pageSize=${pageSize!}" />
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+<@scripts "/${rootContext}/app/js/main.js"></@scripts>
+</html>
