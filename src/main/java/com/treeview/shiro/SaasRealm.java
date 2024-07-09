@@ -11,7 +11,6 @@ import com.treeview.service.system.UserRoleService;
 import com.treeview.utils.ShiroUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -102,7 +101,7 @@ public class SaasRealm extends AuthorizingRealm {
                 onlineInfo.setLastLoginTime(new Date());
                 onlineInfo.setLastVisitTime(new Date());
 
-                if(subject.getSession() != null){
+                if (subject.getSession() != null) {
                     subject.getSession().setAttribute("onlineInfo", onlineInfo);
                 }
 
@@ -120,7 +119,7 @@ public class SaasRealm extends AuthorizingRealm {
         final Set<String> permissions = this.roleMenuService.findMenusByUid(userInfo.getId());
         final Set<String> rolesConvert = new HashSet<>();
 
-        if (CollectionUtils.isNotEmpty(roles)) {
+        if (roles != null && roles.size() > 0) {
             roles.forEach(role -> {
                 rolesConvert.add(String.valueOf(role));
             });

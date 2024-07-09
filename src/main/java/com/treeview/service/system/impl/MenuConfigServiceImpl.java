@@ -9,7 +9,6 @@ import com.treeview.entity.system.TreeMenuAllowAccess;
 import com.treeview.mapper.system.MenuConfigMapper;
 import com.treeview.mapper.system.RoleMenuMapper;
 import com.treeview.service.system.MenuConfigService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -36,16 +35,16 @@ public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuCon
     }
 
     public List<TreeMenu> selectTreeMenuByMenuIdsAndPid(List<Long> menuIds, Long pid) {
-        final QueryWrapper<MenuConfig> ew = new QueryWrapper();
+        final QueryWrapper<MenuConfig> ew = new QueryWrapper<>();
         ew.orderBy(true, true, "sort");
         ew.eq("pid", pid);
-        ew.in("id", menuIds.size() > 0 ? menuIds : Lists.newArrayList(RandomStringUtils.randomNumeric(30)));
+        ew.in("id", menuIds != null && !menuIds.isEmpty() ? menuIds : Lists.newArrayList(RandomStringUtils.randomNumeric(30)));
 
         final List<MenuConfig> menuConfigs = this.list(ew);
         final List<TreeMenu> treeMenus = Lists.newArrayList();
 
         TreeMenu treeMenu;
-        if(CollectionUtils.isNotEmpty(menuConfigs)){
+        if(menuConfigs != null && !menuConfigs.isEmpty()){
             for (MenuConfig menuConfig : menuConfigs) {
                 treeMenu = new TreeMenu();
                 treeMenu.setMenuConfig(menuConfig);
@@ -60,7 +59,7 @@ public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuCon
     }
 
     public List<TreeMenuAllowAccess> selectTreeMenuAllowAccessByMenuIdsAndPid(List<Long> menuIds, Long pid) {
-        final QueryWrapper<MenuConfig> ew = new QueryWrapper();
+        final QueryWrapper<MenuConfig> ew = new QueryWrapper<>();
         ew.orderBy(false, true, "sort");
         ew.eq("pid", pid);
 
@@ -68,7 +67,7 @@ public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuCon
         final List<TreeMenuAllowAccess> treeMenuAllowAccesses = Lists.newArrayList();
 
         TreeMenuAllowAccess treeMenuAllowAccess;
-        if(CollectionUtils.isNotEmpty(menuConfigs)){
+        if(menuConfigs != null && !menuConfigs.isEmpty()){
             for (MenuConfig menuConfig : menuConfigs) {
                 treeMenuAllowAccess = new TreeMenuAllowAccess();
                 treeMenuAllowAccess.setMenuConfig(menuConfig);

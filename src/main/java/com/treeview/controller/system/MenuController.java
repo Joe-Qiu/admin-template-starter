@@ -9,7 +9,6 @@ import com.treeview.entity.framework.MyPage;
 import com.treeview.entity.framework.Rest;
 import com.treeview.entity.system.MenuConfig;
 import com.treeview.service.system.MenuConfigService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -49,7 +48,7 @@ public class MenuController extends SuperController {
 
         Page<MenuConfig> pageData = this.menuConfigService.page(page, ew);
 
-        if (CollectionUtils.isNotEmpty(pageData.getRecords())) {
+        if (pageData != null && pageData.getRecords() != null && pageData.getRecords().size() > 0) {
             pageData.getRecords().forEach(menu -> {
                 if (menu.getPid() != null && menu.getDeep() == 3) {
                     menu.setName(StringUtils.join("<i class='fa fa-file'></i> ", menu.getName()));
@@ -166,7 +165,7 @@ public class MenuController extends SuperController {
         List<MenuConfig> menuConfigs = this.menuConfigService.list(ew);
         List<Map<String, Object>> listMap = new ArrayList<>();
 
-        if (CollectionUtils.isNotEmpty(menuConfigs)) {
+        if (menuConfigs != null && menuConfigs.size() > 0) {
             menuConfigs.forEach(menuConfig -> {
                 Map<String, Object> map = new HashMap<>(16);
                 map.put("id", menuConfig.getId());

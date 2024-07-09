@@ -15,7 +15,6 @@ import com.treeview.service.system.UserInfoService;
 import com.treeview.service.system.UserRoleService;
 import com.treeview.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -83,7 +82,7 @@ public class UserController extends SuperController {
                 userInfo.setPassWord("123456");
             }
 
-            if(CollectionUtils.isNotEmpty(roleIds)){
+            if(roleIds != null && roleIds.size() > 0){
                 userInfoService.insertUser(userInfo, roleIds.stream().toArray(Long[]::new));
             }else{
                 userInfoService.insertUser(userInfo, null);
@@ -115,7 +114,7 @@ public class UserController extends SuperController {
 
         final List<UserRole> myUserRoles = this.userRoleService.list(ew);
         final StringBuffer myRoles = new StringBuffer();
-        if (CollectionUtils.isNotEmpty(myUserRoles)) {
+        if (myUserRoles != null && myUserRoles.size() > 0) {
             myUserRoles.forEach((item) -> {
                 myRoles.append(item.getRoleId().toString()).append(",");
             });

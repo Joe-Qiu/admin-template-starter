@@ -5,7 +5,6 @@ import com.treeview.controller.base.SuperController;
 import com.treeview.entity.framework.MyPage;
 import com.treeview.entity.monitor.OnlineInfo;
 import com.treeview.service.monitor.OnlineInfoService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,7 @@ public class OnlineInfoController extends SuperController {
 
         final Page<OnlineInfo> pageData = this.onlineInfoService.getOnlineUsers(page, search);
 
-        if(CollectionUtils.isNotEmpty(pageData.getRecords())){
+        if(pageData != null && pageData.getRecords() != null && pageData.getRecords().size() > 0){
             pageData.getRecords().forEach(onlineInfo -> {
                 final LocalDateTime localDateTime = LocalDateTime.now();
                 final Date lastVisitTime = onlineInfo.getLastVisitTime();
@@ -50,7 +49,7 @@ public class OnlineInfoController extends SuperController {
                 }
             });
         }
-        MyPage<OnlineInfo> myPage = new MyPage();
+        MyPage<OnlineInfo> myPage = new MyPage<>();
         BeanUtils.copyProperties(pageData, myPage);
         model.addAttribute("pageData", myPage);
         return "monitor/online/list";
