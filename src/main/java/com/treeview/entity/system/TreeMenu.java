@@ -1,9 +1,9 @@
 package com.treeview.entity.system;
 
-import com.google.common.collect.Lists;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,5 +12,5 @@ public class TreeMenu implements Serializable {
 
     private MenuConfig menuConfig;
 
-    private List<TreeMenu> children = Lists.newArrayList();
+    private List<TreeMenu> children = new ArrayList<>();
 }

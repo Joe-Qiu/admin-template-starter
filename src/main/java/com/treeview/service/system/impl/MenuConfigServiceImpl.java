@@ -2,18 +2,17 @@ package com.treeview.service.system.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import com.treeview.entity.system.MenuConfig;
 import com.treeview.entity.system.TreeMenu;
 import com.treeview.entity.system.TreeMenuAllowAccess;
 import com.treeview.mapper.system.MenuConfigMapper;
 import com.treeview.mapper.system.RoleMenuMapper;
 import com.treeview.service.system.MenuConfigService;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("menuConfigService")
@@ -38,10 +37,10 @@ public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuCon
         final QueryWrapper<MenuConfig> ew = new QueryWrapper<>();
         ew.orderBy(true, true, "sort");
         ew.eq("pid", pid);
-        ew.in("id", menuIds != null && !menuIds.isEmpty() ? menuIds : Lists.newArrayList(RandomStringUtils.randomNumeric(30)));
+        ew.in("id", menuIds != null && !menuIds.isEmpty() ? menuIds : "-100");
 
         final List<MenuConfig> menuConfigs = this.list(ew);
-        final List<TreeMenu> treeMenus = Lists.newArrayList();
+        final List<TreeMenu> treeMenus = new ArrayList<>();
 
         TreeMenu treeMenu;
         if(menuConfigs != null && !menuConfigs.isEmpty()){
@@ -64,7 +63,7 @@ public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuCon
         ew.eq("pid", pid);
 
         final List<MenuConfig> menuConfigs = this.list(ew);
-        final List<TreeMenuAllowAccess> treeMenuAllowAccesses = Lists.newArrayList();
+        final List<TreeMenuAllowAccess> treeMenuAllowAccesses = new ArrayList<>();
 
         TreeMenuAllowAccess treeMenuAllowAccess;
         if(menuConfigs != null && !menuConfigs.isEmpty()){

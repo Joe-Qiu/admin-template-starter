@@ -1,9 +1,9 @@
 package com.treeview.entity.system;
 
-import com.google.common.collect.Lists;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,5 +15,5 @@ public class TreeMenuAllowAccess implements Serializable {
 
     private boolean allowAccess = false;
 
-    private List<TreeMenuAllowAccess> children = Lists.newArrayList();
+    private List<TreeMenuAllowAccess> children = new ArrayList<>();
 }

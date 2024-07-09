@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
 import com.treeview.annotation.Logit;
 import com.treeview.controller.base.SuperController;
 import com.treeview.entity.framework.MyPage;
@@ -22,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping({"/system/role"})
@@ -120,7 +121,7 @@ public class RoleController extends SuperController {
             throw new RuntimeException("该角色不存在");
         } else {
             List<RoleMenu> roleMenus = this.roleMenuService.list((Wrapper)(new QueryWrapper()).eq("role_id", id));
-            List<Long> menuIds = Lists.transform(roleMenus, (input) -> input.getMenuId());
+            List<Long> menuIds = roleMenus.stream().map((input) -> input.getMenuId()).collect(Collectors.toList());
             List<TreeMenuAllowAccess> treeMenuAllowAccesses = this.menuConfigService.selectTreeMenuAllowAccessByMenuIdsAndPid(menuIds, 0L);
             model.addAttribute("roleDefine", roleDefine);
             model.addAttribute("treeMenuAllowAccesses", treeMenuAllowAccesses);
@@ -140,8 +141,8 @@ public class RoleController extends SuperController {
     @RequestMapping({"/getUsers"})
     public String getUsers(String roleId, Model model) {
         List<UserRole> userRoles = this.userRoleService.list((Wrapper)(new QueryWrapper()).eq("role_id", roleId));
-        List<Long> userIds = Lists.transform(userRoles, (input) -> input.getUserId());
-        List<UserInfo> users = Lists.newArrayList();
+        List<Long> userIds = userRoles.stream().map((input) -> input.getUserId()).collect(Collectors.toList());
+        List<UserInfo> users = new ArrayList();
         if (userIds.size() > 0) {
             QueryWrapper<UserInfo> ew = new QueryWrapper();
             ew.in("id", userIds);
