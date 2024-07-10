@@ -6,11 +6,6 @@
 
     <#local totalPage = totalPage?floor>
 
-    <script type="text/javascript">
-        var myVariable = "${totalPage}";
-        console.log(myVariable);
-    </script>
-
     <#if (totalPage <= 0) || (currentPage > totalPage)><#return></#if>
     <#local startPage = currentPage - 4>
     <#if (startPage < 1)><#local startPage = 1></#if>

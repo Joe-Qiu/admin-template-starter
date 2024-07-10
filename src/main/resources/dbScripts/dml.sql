@@ -31,9 +31,6 @@ INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (4
 INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (42,'编辑部门',5,NULL,NULL,2,3,'010402','editDept');
 INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (43,'删除部门',5,NULL,NULL,3,3,'010403','deleteDept');
 INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (50,'查看日志列表',6,NULL,NULL,0,3,'010500','listLog');
-INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (60,'监控列表',7,NULL,NULL,1,3,'010701','monitorList');
-INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (61,'系统监控',0,NULL,'fa-chart-line',2,1,'02','monitorList');
-INSERT INTO menu_config (id,name,pid,url,icon,sort,deep,code,resource) VALUES (62,'在线用户',61,'/monitor/online/list/1','fa-users',1,2,'0201',NULL);
 
 INSERT INTO role_menu (id,role_id,menu_id) VALUES (1,1,1);
 INSERT INTO role_menu (id,role_id,menu_id) VALUES (2,1,2);
@@ -60,6 +57,3 @@ INSERT INTO role_menu (id,role_id,menu_id) VALUES (22,1,42);
 INSERT INTO role_menu (id,role_id,menu_id) VALUES (23,1,43);
 INSERT INTO role_menu (id,role_id,menu_id) VALUES (24,1,6);
 INSERT INTO role_menu (id,role_id,menu_id) VALUES (25,1,50);
-INSERT INTO role_menu (id,role_id,menu_id) VALUES (26,1,60);
-INSERT INTO role_menu (id,role_id,menu_id) VALUES (27,1,61);
-INSERT INTO role_menu (id,role_id,menu_id) VALUES (28,1,62);

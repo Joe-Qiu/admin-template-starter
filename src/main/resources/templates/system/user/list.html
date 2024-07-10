@@ -53,6 +53,8 @@
                                                 <tr>
                                                     <th>
                                                         <input type="checkbox" class="minimal checkbox-toolbar">
+                                                    </th>
+                                                    <th>
                                                         <@spring.message code='system.user.list.rowNo'/>
                                                     </th>
                                                     <th>
@@ -79,8 +81,10 @@
                                                         <td>
                                                             <label>
                                                                 <input type="checkbox" class="minimal checkbox-item">
-                                                                ${((pageData.current-1)*pageData.size + user_index+1)!}
                                                             </label>
+                                                        </td>
+                                                        <td>
+                                                            ${((pageData.current-1)*pageData.size + user_index+1)!}
                                                         </td>
                                                         <td>${(user.user_name)!}</td>
                                                         <td>${(user.dept_desc)!'--'}</td>
@@ -89,18 +93,18 @@
                                                         </td>
                                                         <td>${(user.dept_name)!'--'}</td>
                                                         <td>
-                                                            <#if user.status=='1'>生效中<#else>已停用</#if>
+                                                            <#if user.status=='1'>
+                                                                <@spring.message code='system.user.list.status.effective'/>
+                                                            <#else>
+                                                                <@spring.message code='system.user.list.status.expired'/>
+                                                            </#if>
                                                         </td>
                                                         <td>
                                                             <@shiro.hasPermission name="editUser">
-                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:;"
-                                                                   data-url="/system/user/edit/${(user.id)!}"
-                                                                   data-title="编辑用户" data-width="700" data-height="450">编辑</a>
+                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:;" data-url="/system/user/edit/${(user.id)!}" data-title="<@spring.message code='system.user.list.action.editUser'/>" data-width="700" data-height="450"><@spring.message code='system.user.list.action.edit'/></a>
                                                             </@shiro.hasPermission>
                                                             <@shiro.hasPermission name="deleteUser">
-                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax"
-                                                                   data-submit-url="/system/user/delete?id=${(user.id)!}"
-                                                                   data-confirm="您确定要删除该条记录吗?">删除</a>
+                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax" data-submit-url="/system/user/delete?id=${(user.id)!}" data-confirm="<@spring.message code='system.user.list.message.deleteUser'/>"><@spring.message code='system.user.list.action.delete'/></a>
                                                             </@shiro.hasPermission>
                                                         </td>
                                                     </tr>
@@ -111,13 +115,11 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-5">
                                             <#include "/include/paginateBar.html" />
-                                            <@paginate pageData=pageData actionUrl="/system/user/list/"
-                                            urlParas="?search=${search!}&daterange=${daterange!}" />
+                                            <@paginate pageData=pageData actionUrl="/system/user/list/" urlParas="?search=${search!}&daterange=${daterange!}"/>
                                         </div>
                                         <div class="col-sm-12 col-md-7">
                                             <#include "/include/paginate.html" />
-                                            <@paginate currentPage=pageData.getCurrent() totalCount=pageData.getTotal() sizeNum=pageData.getSize()
-                                            actionUrl="/system/user/list/" urlParas="?search=${search!}&pageSize=${pageSize!}" />
+                                            <@paginate currentPage=pageData.getCurrent() totalCount=pageData.getTotal() sizeNum=pageData.getSize() actionUrl="/system/user/list/" urlParas="?search=${search!}&pageSize=${pageSize!}"/>
                                         </div>
                                     </div>
                                 </div>
