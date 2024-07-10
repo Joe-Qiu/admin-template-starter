@@ -3,14 +3,12 @@ package com.treeview.interceptor;
 import com.treeview.entity.system.CurrUser;
 import com.treeview.entity.system.TreeMenu;
 import com.treeview.entity.system.UserInfo;
-import com.treeview.service.monitor.OnlineInfoService;
 import com.treeview.service.system.MenuConfigService;
 import com.treeview.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,7 +17,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,13 +34,6 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
     @Value("${spring.root.context}")
     private String rootContext;
-
-    @Lazy
-    @Resource
-    private OnlineInfoService onlineInfoService;
-
-    @Resource
-    private ThreadPoolTaskExecutor serviceTaskExecutor;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -83,11 +73,6 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
                 request.setAttribute("currUser", currUser);
             }
-
-            serviceTaskExecutor.submit(() ->{
-                String sessionId = request.getSession().getId();
-                onlineInfoService.updateUserLatestVisitTime(sessionId, new Date());
-            });
         }
 
         /**

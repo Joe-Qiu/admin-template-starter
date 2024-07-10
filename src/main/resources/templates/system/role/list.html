@@ -100,7 +100,8 @@
                                         </div>
                                         <div class="col-sm-12 col-md-7">
                                             <#include "/include/paginate.html" />
-                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages() actionUrl="/system/role/list/" urlParas="?search=${search!}&pageSize=${pageSize!}"/>
+                                            <@paginate currentPage=pageData.getCurrent() totalCount=pageData.getTotal() sizeNum=pageData.getSize()
+                                            actionUrl="/system/role/list/" urlParas="?search=${search!}&pageSize=${pageSize!}"/>
                                         </div>
                                     </div>
                                 </div>

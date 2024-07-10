@@ -6,5 +6,5 @@ import com.treeview.entity.system.UserRole;
 import java.util.List;
 
 public interface UserRoleMapper extends BaseMapper<UserRole> {
-    List<String> selectPermissionByUid(Long var1);
+    List<String> selectPermissionByUid(Long uid);
 }

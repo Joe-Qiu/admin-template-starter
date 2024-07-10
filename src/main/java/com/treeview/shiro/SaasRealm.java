@@ -1,15 +1,11 @@
 package com.treeview.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.treeview.entity.monitor.OnlineInfo;
 import com.treeview.entity.system.UserInfo;
 import com.treeview.enums.system.user.UserStatusEnum;
-import com.treeview.service.monitor.OnlineInfoService;
 import com.treeview.service.system.RoleMenuService;
 import com.treeview.service.system.UserInfoService;
 import com.treeview.service.system.UserRoleService;
-import com.treeview.utils.ShiroUtil;
-import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -24,8 +20,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,9 +34,6 @@ public class SaasRealm extends AuthorizingRealm {
 
     @Resource
     private RoleMenuService roleMenuService;
-
-    @Resource
-    private OnlineInfoService onlineInfoService;
 
     @Resource
     private ThreadPoolTaskExecutor serviceTaskExecutor;
@@ -86,26 +77,6 @@ public class SaasRealm extends AuthorizingRealm {
             final Subject subject = SecurityUtils.getSubject();
 
             if (subject instanceof WebSubject) {
-                final HttpServletRequest request = (HttpServletRequest) ((WebSubject) subject).getServletRequest();
-                final UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-
-                final OnlineInfo onlineInfo = new OnlineInfo();
-                onlineInfo.setUserName(userInfo.getUserName());
-                onlineInfo.setSession(String.valueOf(subject.getSession().getId()));
-                onlineInfo.setIpAddr(ShiroUtil.getRemoteAddress());
-                // 获取客户端浏览器
-                onlineInfo.setBrowser(userAgent.getBrowser().getName());
-                // 获取客户端操作系统
-                onlineInfo.setOsName(userAgent.getOperatingSystem().getName());
-
-                onlineInfo.setLastLoginTime(new Date());
-                onlineInfo.setLastVisitTime(new Date());
-
-                if (subject.getSession() != null) {
-                    subject.getSession().setAttribute("onlineInfo", onlineInfo);
-                }
-
-                serviceTaskExecutor.submit(() -> onlineInfoService.save(onlineInfo));
             }
         } catch (Exception e) {
             log.error("Exception", e);

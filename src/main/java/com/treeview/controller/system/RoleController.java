@@ -2,17 +2,14 @@ package com.treeview.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.treeview.annotation.Logit;
 import com.treeview.controller.base.SuperController;
-import com.treeview.entity.framework.MyPage;
 import com.treeview.entity.framework.Rest;
 import com.treeview.entity.system.*;
 import com.treeview.service.system.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,22 +40,18 @@ public class RoleController extends SuperController {
     @RequiresPermissions({"listRole"})
     @RequestMapping({"/list/{pageNumber}"})
     public String list(@PathVariable Integer pageNumber, @RequestParam(defaultValue = "10") Integer pageSize, String search, Model model) {
-        Page<RoleDefine> page = this.getPage(pageNumber, pageSize);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setColumn("create_time");
-        orderItem.setAsc(false);
-        page.addOrder(orderItem);
+        final Page<RoleDefine> page = this.getPage(pageNumber, pageSize);
+
         model.addAttribute("pageSize", pageSize);
-        QueryWrapper<RoleDefine> ew = new QueryWrapper();
+        final QueryWrapper<RoleDefine> ew = new QueryWrapper();
         if (StringUtils.isNotBlank(search)) {
             ew.like("role_name", search);
+            ew.orderByDesc("create_time");
             model.addAttribute("search", search);
         }
 
         Page<RoleDefine> pageData = this.roleDefineService.page(page, ew);
-        MyPage<RoleDefine> myPage = new MyPage();
-        BeanUtils.copyProperties(pageData, myPage);
-        model.addAttribute("pageData", myPage);
+        model.addAttribute("pageData", pageData);
         return "system/role/list";
     }
 
@@ -116,15 +109,20 @@ public class RoleController extends SuperController {
     @RequiresPermissions({"authRole"})
     @RequestMapping({"/auth/{id}"})
     public String auth(@PathVariable String id, Model model) {
-        RoleDefine roleDefine = this.roleDefineService.getById(id);
+        final RoleDefine roleDefine = this.roleDefineService.getById(id);
         if (roleDefine == null) {
             throw new RuntimeException("该角色不存在");
         } else {
-            List<RoleMenu> roleMenus = this.roleMenuService.list((Wrapper)(new QueryWrapper()).eq("role_id", id));
-            List<Long> menuIds = roleMenus.stream().map((input) -> input.getMenuId()).collect(Collectors.toList());
-            List<TreeMenuAllowAccess> treeMenuAllowAccesses = this.menuConfigService.selectTreeMenuAllowAccessByMenuIdsAndPid(menuIds, 0L);
+            final QueryWrapper<RoleMenu> ew = new QueryWrapper();
+            ew.eq("role_id", id);
+
+            final List<RoleMenu> roleMenus = this.roleMenuService.list(ew);
+            final List<Long> menuIds = roleMenus.stream().map((input) -> input.getMenuId()).collect(Collectors.toList());
+            final List<TreeMenuAllowAccess> treeMenuAllowAccesses = this.menuConfigService.selectTreeMenuAllowAccessByMenuIdsAndPid(menuIds, 0L);
+
             model.addAttribute("roleDefine", roleDefine);
             model.addAttribute("treeMenuAllowAccesses", treeMenuAllowAccesses);
+
             return "system/role/auth";
         }
     }

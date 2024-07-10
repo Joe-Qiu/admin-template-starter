@@ -58,8 +58,7 @@
                                                         <td>${(dept.deptDesc)!'--'}</td>
                                                         <td>
                                                             <@shiro.hasPermission name="editDept">
-                                                                <a class="btn btn-primary btn-xs dialog" data-title="编辑部门"
-                                                                   data-url="/system/dept/edit/${(dept.id)!}" data-width="650" data-height="300">
+                                                                <a class="btn btn-primary btn-xs dialog" data-title="编辑部门" data-url="/system/dept/edit/${(dept.id)!}" data-width="650" data-height="300">
                                                                     <i class="fa fa-pencil-square-o"></i>编辑
                                                                 </a>
                                                             </@shiro.hasPermission>
@@ -80,7 +79,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-7">
                                             <#include "/include/paginate.html"/>
-                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages()
+                                            <@paginate currentPage=pageData.getCurrent() totalCount=pageData.getTotal() sizeNum=pageData.getSize()
                                             actionUrl="/system/dept/list/" urlParas="?search=${search!}&pageSize=${pageSize!}" />
                                         </div>
                                     </div>

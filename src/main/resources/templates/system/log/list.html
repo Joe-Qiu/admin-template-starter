@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-7">
                                             <#include "/include/paginate.html" />
-                                            <@paginate currentPage=pageData.getCurrent() totalPage=pageData.getPages()
+                                            <@paginate currentPage=pageData.getCurrent() totalCount=pageData.getTotal() sizeNum=pageData.getSize()
                                             actionUrl="/system/log/list/"
                                             urlParas="?search=${search!}&daterange=${daterange!}&pageSize=${pageSize!}"
                                             />

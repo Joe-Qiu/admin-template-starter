@@ -35,9 +35,11 @@ public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuCon
 
     public List<TreeMenu> selectTreeMenuByMenuIdsAndPid(List<Long> menuIds, Long pid) {
         final QueryWrapper<MenuConfig> ew = new QueryWrapper<>();
-        ew.orderBy(true, true, "sort");
         ew.eq("pid", pid);
-        ew.in("id", menuIds != null && !menuIds.isEmpty() ? menuIds : "-100");
+        if(menuIds != null && !menuIds.isEmpty()){
+            ew.in("id", menuIds);
+        }
+        ew.orderByAsc("sort");
 
         final List<MenuConfig> menuConfigs = this.list(ew);
         final List<TreeMenu> treeMenus = new ArrayList<>();

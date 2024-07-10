@@ -27,7 +27,7 @@ public class ShiroSessionDao extends AbstractSessionDAO {
 //            return null;
 //        } else {
 //            Session s = null;
-//            byte[] value = this.jimClient.get(("shiro_jimdb_session:" + sessionId).getBytes());
+//            byte[] value = this.redisClient.get(("shiro_redisdb_session:" + sessionId).getBytes());
 //            if (value != null) {
 //                s = (Session)RedisSerializeUtil.deserialize(value);
 //            }
@@ -46,7 +46,7 @@ public class ShiroSessionDao extends AbstractSessionDAO {
             if (session != null) {
                 long expireTime = 1800000L;
                 session.setTimeout(expireTime);
-//                this.jimClient.setEx(("shiro_jimdb_session:" + session.getId()).getBytes(), RedisSerializeUtil.serialize(session), expireTime, TimeUnit.MILLISECONDS);
+//                this.redisClient.setEx(("shiro_redisdb_session:" + session.getId()).getBytes(), RedisSerializeUtil.serialize(session), expireTime, TimeUnit.MILLISECONDS);
             }
 
         } else {
@@ -56,7 +56,7 @@ public class ShiroSessionDao extends AbstractSessionDAO {
 
     public void delete(Session session) {
         if (session != null && session.getId() != null) {
-//            this.jimClient.del("shiro_jimdb_session:" + session.getId());
+//            this.redisClient.del("shiro_redisdb_session:" + session.getId());
         } else {
             log.error("session or session id is null");
         }

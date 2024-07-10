@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.treeview.annotation.Logit;
 import com.treeview.controller.base.SuperController;
-import com.treeview.entity.framework.MyPage;
 import com.treeview.entity.framework.Rest;
 import com.treeview.entity.system.RoleDefine;
 import com.treeview.entity.system.UserInfo;
@@ -17,7 +16,6 @@ import com.treeview.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -51,15 +49,12 @@ public class UserController extends SuperController {
             model.addAttribute("search", search);
         }
 
-        Page<Map<Object, Object>> page = this.getPage(pageNumber, pageSize);
+        final Page<Map<Object, Object>> page = this.getPage(pageNumber, pageSize);
         model.addAttribute("pageSize", pageSize);
-        Page<Map<Object, Object>> pageData = this.userInfoService.selectUserPage(page, search);
+        final Page<Map<Object, Object>> pageData = this.userInfoService.selectUserPage(page, search);
 
-        MyPage<Map<Object, Object>> myPage = new MyPage();
-        BeanUtils.copyProperties(pageData, myPage);
-        model.addAttribute("pageData", myPage);
+        model.addAttribute("pageData", pageData);
 
-        log.debug(gson.toJson(myPage));
         return "system/user/list";
     }
 

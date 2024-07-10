@@ -1,17 +1,14 @@
 package com.treeview.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.treeview.annotation.Logit;
 import com.treeview.controller.base.SuperController;
-import com.treeview.entity.framework.MyPage;
 import com.treeview.entity.framework.Rest;
 import com.treeview.entity.system.MenuConfig;
 import com.treeview.service.system.MenuConfigService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,21 +31,19 @@ public class MenuController extends SuperController {
     @RequiresPermissions({"listMenu"})
     @RequestMapping({"/list/{pageNumber}"})
     public String list(@PathVariable Integer pageNumber, @RequestParam(defaultValue = "10") Integer pageSize, String search, Model model) {
-        Page<MenuConfig> page = this.getPage(pageNumber, pageSize);
-        OrderItem orderItem = new OrderItem();
-        orderItem.setColumn("code");
-        orderItem.setAsc(true);
-        page.addOrder(orderItem);
+        final Page<MenuConfig> page = this.getPage(pageNumber, pageSize);
         model.addAttribute("pageSize", pageSize);
-        QueryWrapper<MenuConfig> ew = new QueryWrapper<>();
+
+        final QueryWrapper<MenuConfig> ew = new QueryWrapper<>();
         if (StringUtils.isNotBlank(search)) {
             ew.like("name", search);
+            ew.orderByAsc("code");
             model.addAttribute("search", search);
         }
 
         Page<MenuConfig> pageData = this.menuConfigService.page(page, ew);
 
-        if (pageData != null && pageData.getRecords() != null && pageData.getRecords().size() > 0) {
+        if (pageData != null && pageData.getRecords() != null && !pageData.getRecords().isEmpty()) {
             pageData.getRecords().forEach(menu -> {
                 if (menu.getPid() != null && menu.getDeep() == 3) {
                     menu.setName(StringUtils.join("<i class='fa fa-file'></i> ", menu.getName()));
@@ -62,9 +57,7 @@ public class MenuController extends SuperController {
             });
         }
 
-        MyPage<MenuConfig> myPage = new MyPage<>();
-        BeanUtils.copyProperties(pageData, myPage);
-        model.addAttribute("pageData", myPage);
+        model.addAttribute("pageData", pageData);
         return "system/menu/list";
     }
 
@@ -165,7 +158,7 @@ public class MenuController extends SuperController {
         List<MenuConfig> menuConfigs = this.menuConfigService.list(ew);
         List<Map<String, Object>> listMap = new ArrayList<>();
 
-        if (menuConfigs != null && menuConfigs.size() > 0) {
+        if (menuConfigs != null && !menuConfigs.isEmpty()) {
             menuConfigs.forEach(menuConfig -> {
                 Map<String, Object> map = new HashMap<>(16);
                 map.put("id", menuConfig.getId());
