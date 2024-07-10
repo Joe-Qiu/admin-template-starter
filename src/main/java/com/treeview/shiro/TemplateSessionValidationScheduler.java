@@ -12,12 +12,12 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 自定义任务调度器完成
+ * 自定义任务调度器
  */
 @Slf4j
 @Data
 @Component
-public class SaasSessionValidationScheduler implements SessionValidationScheduler {
+public class TemplateSessionValidationScheduler implements SessionValidationScheduler {
     @Resource
     private ScheduledThreadPoolExecutor scheduledThreadPoolScheduler;
 

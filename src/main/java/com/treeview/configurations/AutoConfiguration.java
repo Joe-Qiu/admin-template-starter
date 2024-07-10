@@ -4,8 +4,12 @@ import com.baomidou.dynamic.datasource.plugin.MasterSlaveAutoRoutingPlugin;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.google.gson.Gson;
 import com.treeview.interceptor.GlobalInterceptor;
-import com.treeview.shiro.*;
+import com.treeview.shiro.SaasRealm;
+import com.treeview.shiro.ShiroSessionDao;
+import com.treeview.shiro.ShiroTagFreeMarkerConfigurer;
+import com.treeview.shiro.TemplateSessionValidationScheduler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -26,9 +30,14 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -38,6 +47,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @Slf4j
 @Configuration
@@ -56,10 +66,8 @@ public class AutoConfiguration implements WebMvcConfigurer {
     private TemplateProperties templateProperties;
 
     @Resource
-    private SaasSessionListener saasSessionListener;
-
-    @Resource
-    private SaasSessionValidationScheduler saasSessionValidationScheduler;
+    @Lazy
+    private TemplateSessionValidationScheduler templateSessionValidationScheduler;
 
     @Resource
     private GlobalInterceptor globalInterceptor;
@@ -68,6 +76,20 @@ public class AutoConfiguration implements WebMvcConfigurer {
     public CacheManager cacheManager() {
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:cache/shiroCache.xml");
+        return cacheManager;
+    }
+
+    @Bean
+    public EhCacheManagerFactoryBean ehCacheManager() {
+        EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
+        factoryBean.setConfigLocation(new ClassPathResource("cache/localCache.xml"));
+        return factoryBean;
+    }
+
+    @Bean
+    public EhCacheCacheManager cacheManager(EhCacheManagerFactoryBean ehCacheManager) {
+        EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+        cacheManager.setCacheManager(ehCacheManager.getObject());
         return cacheManager;
     }
 
@@ -98,10 +120,9 @@ public class AutoConfiguration implements WebMvcConfigurer {
         } else {
             defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
         }
-        defaultWebSessionManager.setSessionListeners(Arrays.asList(saasSessionListener));
 
         //定义要使用的无效的Session定时调度器
-        defaultWebSessionManager.setSessionValidationScheduler(saasSessionValidationScheduler);
+        defaultWebSessionManager.setSessionValidationScheduler(templateSessionValidationScheduler);
         //是否定时检查session
         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
 
@@ -187,7 +208,7 @@ public class AutoConfiguration implements WebMvcConfigurer {
     public CookieRememberMeManager cookieRememberMeManager() {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
-        simpleCookie.setMaxAge(259200000);
+        simpleCookie.setMaxAge(24 * 60 * 60);
         cookieRememberMeManager.setCookie(simpleCookie);
         cookieRememberMeManager.setCipherKey(Base64.decode("6ZmI6I2j5Y+R5aSn5ZOlAA=="));
         return cookieRememberMeManager;
@@ -236,5 +257,30 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public MasterSlaveAutoRoutingPlugin masterSlaveAutoRoutingPlugin() {
         return new MasterSlaveAutoRoutingPlugin();
+    }
+
+    @Bean
+    public ThreadPoolTaskExecutor serviceTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(256);
+        executor.setMaxPoolSize(256);
+        executor.setKeepAliveSeconds(120000);
+        executor.setQueueCapacity(10000);
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
+    }
+
+    @Bean
+    public ScheduledExecutorFactoryBean scheduledThreadPoolScheduler() {
+        ScheduledExecutorFactoryBean scheduler = new ScheduledExecutorFactoryBean();
+        scheduler.setPoolSize(5);
+        scheduler.setThreadNamePrefix("scheduled-");
+        return scheduler;
+    }
+
+    @Bean
+    public Gson gsonInst() {
+        return new Gson();
     }
 }

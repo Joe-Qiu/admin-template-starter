@@ -11,6 +11,4 @@
 
     <!-- 事务管理 -->
     <import resource="classpath*:spring/applicationContext-service.xml"/>
-    <!-- 异步线程 -->
-    <import resource="classpath*:spring/applicationContext-beans.xml"/>
 </beans>
