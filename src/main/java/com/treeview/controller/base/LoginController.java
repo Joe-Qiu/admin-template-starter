@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @author joe.qiu on 2022/5/1
- * @version V1.0.0
- */
 @Controller
 public class LoginController extends SuperController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)

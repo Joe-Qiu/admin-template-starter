@@ -12,4 +12,5 @@ public class TemplateProperties {
     private String anon;
     private String enterprise;
     private String locale;
+    private String rootContext;
 }

@@ -8,7 +8,6 @@ import com.treeview.service.system.MenuConfigService;
 import com.treeview.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -20,12 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-/**
- * @author joe.qiu on 2020/03/06
- * @version V1.0.0
- *
- * 全局拦截器
- */
 @Slf4j
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
@@ -33,16 +26,13 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Resource
     private MenuConfigService menuConfigService;
 
-    @Value("${spring.root.context}")
-    private String rootContext;
-
     @Resource
     private TemplateProperties templateProperties;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
-            request.setAttribute("rootContext", rootContext);
+            request.setAttribute("rootContext", templateProperties.getRootContext());
             request.setAttribute("enterprise", templateProperties.getEnterprise());
 
             Cookie[] cookies = request.getCookies();

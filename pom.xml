@@ -6,7 +6,7 @@
     <groupId>treeview-saas</groupId>
     <artifactId>admin-template-starter</artifactId>
     <version>0.9.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <jdk.version>1.8</jdk.version>
@@ -204,11 +204,10 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>**/*.*</include>
+                    <include>cache/*.*</include>
+                    <include>i18n/*.*</include>
+                    <include>templates/*.*</include>
                 </includes>
-                <excludes>
-                    <exclude>static/**/*.*</exclude>
-                </excludes>
             </resource>
         </resources>
     </build>

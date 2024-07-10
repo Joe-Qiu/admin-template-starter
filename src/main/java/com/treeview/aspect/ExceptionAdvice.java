@@ -14,9 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-/**
- * 全局异常处理器
- */
 @Slf4j
 @ControllerAdvice
 public class ExceptionAdvice {
