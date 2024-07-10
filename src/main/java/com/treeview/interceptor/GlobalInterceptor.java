@@ -1,5 +1,6 @@
 package com.treeview.interceptor;
 
+import com.treeview.configurations.TemplateProperties;
 import com.treeview.entity.system.CurrUser;
 import com.treeview.entity.system.TreeMenu;
 import com.treeview.entity.system.UserInfo;
@@ -35,10 +36,14 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Value("${spring.root.context}")
     private String rootContext;
 
+    @Resource
+    private TemplateProperties templateProperties;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
             request.setAttribute("rootContext", rootContext);
+            request.setAttribute("enterprise", templateProperties.getEnterprise());
 
             Cookie[] cookies = request.getCookies();
 

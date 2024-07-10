@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "admin.template")
 public class TemplateProperties {
-    private String env;
     private String skin;
-    private String anonUrls;
-    private String systemName;
-    private String shortName;
+    private String anon;
+    private String enterprise;
+    private String locale;
 }

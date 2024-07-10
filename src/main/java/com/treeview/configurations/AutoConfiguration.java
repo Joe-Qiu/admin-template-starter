@@ -146,7 +146,7 @@ public class AutoConfiguration implements WebMvcConfigurer {
         mapConfig.put("/captcha/image", "anon");
         mapConfig.put("/register", "anon");
         mapConfig.put("/system/user/checkName", "anon");
-        String anonUrls = this.templateProperties.getAnonUrls();
+        String anonUrls = this.templateProperties.getAnon();
         if (StringUtils.isNotEmpty(anonUrls)) {
             String[] urls = StringUtils.split(anonUrls, ";");
             if (urls != null && urls.length > 0) {
@@ -196,7 +196,18 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-        cookieLocaleResolver.setDefaultLocale(Locale.US);
+        final String localeStr = this.templateProperties.getLocale();
+
+        Locale locale = Locale.US;
+        if (StringUtils.isNotEmpty(localeStr)) {
+            try {
+                locale = new Locale(localeStr.split("_")[0], localeStr.split("_")[1]);
+            } catch (Exception e) {
+                locale = Locale.US;
+            }
+        }
+
+        cookieLocaleResolver.setDefaultLocale(locale);
         cookieLocaleResolver.setCookieHttpOnly(true);
         cookieLocaleResolver.setCookieName("lang");
         cookieLocaleResolver.setCookieMaxAge(24 * 60 * 60);
