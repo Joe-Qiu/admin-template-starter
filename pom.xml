@@ -58,16 +58,6 @@
             <version>3.4.0</version>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>4.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>${shiro.version}</version>
@@ -169,44 +159,24 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
         </plugins>
 
         <resources>
             <resource>
-                <directory>src/main/resources/static</directory>
-                <targetPath>META-INF/static</targetPath>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.otf</exclude>
-                    <exclude>**/*.eot</exclude>
-                    <exclude>**/*.svg</exclude>
-                    <exclude>**/*.ttf</exclude>
-                    <exclude>**/*.woff</exclude>
-                    <exclude>**/*.woff2</exclude>
-                    <exclude>**/*.ico</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources/static</directory>
-                <targetPath>META-INF/static</targetPath>
-                <filtering>false</filtering>
-                <includes>
-                    <include>**/*.otf</include>
-                    <include>**/*.eot</include>
-                    <include>**/*.svg</include>
-                    <include>**/*.ttf</include>
-                    <include>**/*.woff</include>
-                    <include>**/*.woff2</include>
-                    <include>**/*.ico</include>
-                </includes>
-            </resource>
-            <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <filtering>false</filtering>
                 <includes>
                     <include>cache/*.*</include>
                     <include>i18n/*.*</include>
-                    <include>templates/*.*</include>
+                    <include>templates/**</include>
+                    <include>static/**</include>
                 </includes>
             </resource>
         </resources>

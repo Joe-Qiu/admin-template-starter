@@ -1,9 +1,5 @@
 package com.treeview.configurations;
 
-import com.baomidou.dynamic.datasource.plugin.MasterSlaveAutoRoutingPlugin;
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.google.gson.Gson;
 import com.treeview.interceptor.GlobalInterceptor;
 import com.treeview.shiro.SaasRealm;
@@ -27,14 +23,17 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -52,6 +51,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Slf4j
 @Configuration
 @EnableCaching
+@MapperScan("com.treeview.mapper")
 @EnableConfigurationProperties({TemplateProperties.class})
 public class AutoConfiguration implements WebMvcConfigurer {
     @Lazy
@@ -196,15 +196,6 @@ public class AutoConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor(DbType.MYSQL);
-        paginationInnerInterceptor.setOverflow(false);
-        interceptor.addInnerInterceptor(paginationInnerInterceptor);
-        return interceptor;
-    }
-
-    @Bean
     public CookieRememberMeManager cookieRememberMeManager() {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
@@ -255,11 +246,6 @@ public class AutoConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public MasterSlaveAutoRoutingPlugin masterSlaveAutoRoutingPlugin() {
-        return new MasterSlaveAutoRoutingPlugin();
-    }
-
-    @Bean
     public ThreadPoolTaskExecutor serviceTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(256);
@@ -282,5 +268,13 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public Gson gsonInst() {
         return new Gson();
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:i18n/internation");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 }
