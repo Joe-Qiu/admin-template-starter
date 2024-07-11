@@ -8,6 +8,7 @@ import com.treeview.shiro.ShiroTagFreeMarkerConfigurer;
 import com.treeview.shiro.TemplateSessionValidationScheduler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -34,6 +35,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -108,7 +110,11 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public SessionManager sessionManager() {
         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
-        defaultWebSessionManager.setGlobalSessionTimeout(1800000L);
+        if(NumberUtils.isDigits(templateProperties.getSessionTimeout())){
+            defaultWebSessionManager.setGlobalSessionTimeout(Long.parseLong(templateProperties.getSessionTimeout()));
+        }else{
+            defaultWebSessionManager.setGlobalSessionTimeout(30 * 60 * 1000L);
+        }
         defaultWebSessionManager.setDeleteInvalidSessions(true);
         defaultWebSessionManager.setSessionIdCookieEnabled(true);
         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
@@ -273,7 +279,18 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:i18n/internation");
+        final List<String> bundles = new ArrayList();
+        bundles.add("classpath:i18n/internation");
+
+        if(StringUtils.isNotEmpty(templateProperties.getComposeResource())){
+            String[] resources = StringUtils.split(templateProperties.getComposeResource(), ";");
+            if(resources != null && resources.length > 0){
+                Arrays.stream(resources).forEach((item) -> {
+                    bundles.add("classpath:" + item);
+                });
+            }
+        }
+        messageSource.setBasenames(bundles.toArray(new String[0]));
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }

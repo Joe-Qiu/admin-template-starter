@@ -13,4 +13,6 @@ public class TemplateProperties {
     private String enterprise;
     private String locale;
     private String rootContext;
+    private String sessionTimeout;
+    private String composeResource;
 }
