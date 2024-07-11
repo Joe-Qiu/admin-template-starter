@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.treeview.entity.system.UserInfo;
 import com.treeview.entity.system.UserRole;
+import com.treeview.event.UserRegistrationEvent;
 import com.treeview.mapper.system.UserInfoMapper;
 import com.treeview.mapper.system.UserRoleMapper;
 import com.treeview.service.system.UserInfoService;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +29,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Resource
     private UserRoleMapper userRoleMapper;
+
+    @Resource
+    private ApplicationContext applicationContext;
 
     public void insertUser(UserInfo userInfo, Long[] roleIds) {
         userInfo.setCreateTime(new Date());
@@ -77,7 +82,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         userInfo.setPassWord(this.encryptPassWord(userName, passWord, userInfo.getSalt()));
 
         this.save(userInfo);
-        return false;
+
+        applicationContext.publishEvent(new UserRegistrationEvent(this, userInfo));
+        return true;
     }
 
     @Override
