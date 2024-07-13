@@ -16,7 +16,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.subject.WebSubject;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -34,9 +33,6 @@ public class SaasRealm extends AuthorizingRealm {
 
     @Resource
     private RoleMenuService roleMenuService;
-
-    @Resource
-    private ThreadPoolTaskExecutor serviceTaskExecutor;
 
     public SaasRealm() {
         this.setName("ArcherRealm");

@@ -3,7 +3,7 @@ package com.treeview.controller.system;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.treeview.annotation.Logit;
-import com.treeview.controller.base.SuperController;
+import com.treeview.controller.basic.SuperController;
 import com.treeview.entity.framework.Rest;
 import com.treeview.entity.system.RoleDefine;
 import com.treeview.entity.system.UserInfo;

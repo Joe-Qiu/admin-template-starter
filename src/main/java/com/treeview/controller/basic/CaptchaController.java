@@ -1,4 +1,4 @@
-package com.treeview.controller.base;
+package com.treeview.controller.basic;
 
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;

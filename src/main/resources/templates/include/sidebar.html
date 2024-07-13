@@ -4,15 +4,15 @@
 <aside class="main-sidebar sidebar-dark-light elevation-4">
     <a href="javascript:void(0);" class="brand-link">
         <img src="/${rootContext}/logo/trademark.png" alt="Treeview" class="brand-image" style="opacity: .8">
-        <span class="brand-text font-weight-light">${(enterprise)!}</span>
+        <span class="brand-text font-weight-light">${(company)!}</span>
     </a>
     <div class="sidebar">
         <div class="user-panel mt-2 pb-2 mb-2 d-flex">
             <div class="image">
-                <img src="${currUser.avatar!'/${rootContext}/img/default.png'}" class="img-circle elevation-2">
+                <img src="${(currUser.avatar)!'/${rootContext}/img/default.png'}" class="img-circle elevation-2">
             </div>
             <div class="info">
-                <a href="javascript:void(0);" class="d-block">${(currUser.nickName)!}</a>
+                <a href="javascript:void(0);" class="d-block">${(currUser.nickName)!$((currUser.userName))}</a>
             </div>
         </div>
         <div class="form-inline">

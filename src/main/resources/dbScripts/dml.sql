@@ -1,6 +1,6 @@
-INSERT INTO department(id, dept_name, dept_desc) VALUES (1, '研发部', '1号会员店产品研发部');
+INSERT INTO department(id, dept_name, dept_desc) VALUES (1, '研发部', '研发部');
 
-INSERT INTO user_info values(1, 1, 'adminlte', 'Joe', '00', 'joe.qiu@outlook.com', '15888888888', '0', '', '45bb715c927611ca0546153036ab9c6c', 'cb)d([FOo7', '1', sysdate(), update_time);
+INSERT INTO user_info values(1, 1, 'adminlte', 'adminlte', '00', 'adminlte@outlook.com', '18888888888', '0', '', '45bb715c927611ca0546153036ab9c6c', 'cb)d([FOo7', '1', sysdate(), update_time);
 
 INSERT INTO user_role(id, user_id, role_id) values (1, 1, 1);
 

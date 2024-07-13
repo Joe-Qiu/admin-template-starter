@@ -1,20 +1,18 @@
-package com.treeview.controller.base;
+package com.treeview.controller.basic;
 
 import com.treeview.entity.framework.Rest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Controller
+@RestController
 @RequestMapping("/i18n")
 public class I18nController {
     @RequestMapping("/setLang")
-    @ResponseBody
     public Rest setLang(HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isNotEmpty(request.getParameter("lang"))) {
             String lang = request.getParameter("lang");

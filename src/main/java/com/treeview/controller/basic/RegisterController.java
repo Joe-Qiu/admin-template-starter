@@ -1,4 +1,4 @@
-package com.treeview.controller.base;
+package com.treeview.controller.basic;
 
 import com.treeview.entity.framework.Rest;
 import com.treeview.entity.system.UserInfo;
@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 public class RegisterController extends SuperController{
     @Resource
     private UserInfoService userInfoService;
+
     @GetMapping(value = "/register")
     public String register() {
         return "system/register";

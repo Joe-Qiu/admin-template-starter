@@ -77,17 +77,3 @@ CREATE TABLE role_menu (
     menu_id       bigint(20) unsigned     NOT NULL COMMENT '角色主键',
     PRIMARY KEY (id)
 ) engine=innodb DEFAULT charset=utf8mb4 auto_increment=10 COMMENT='角色菜单关联表';
-
-DROP TABLE IF EXISTS online_info;
-CREATE TABLE online_info (
-    id                  bigint(20)     NOT NULL auto_increment   COMMENT 'ID',
-    user_name          varchar(50)    DEFAULT ''                COMMENT '登录账号',
-    session             varchar(255)   DEFAULT ''                COMMENT 'SESSION ID',
-    ip_addr             varchar(128)   DEFAULT ''                COMMENT '登录IP地址',
-    browser             varchar(50)    DEFAULT ''                COMMENT '浏览器类型',
-    os_name             varchar(50)    DEFAULT ''                COMMENT '操作系统',
-    last_login_time     datetime       DEFAULT NULL              COMMENT '最后登录时间',
-    last_visit_time     datetime       DEFAULT NULL              COMMENT '最后访问时间',
-    primary key (id),
-    key idx_session(session)
-) engine=innodb DEFAULT charset=utf8mb4 auto_increment=10 COMMENT = '系统访问记录';

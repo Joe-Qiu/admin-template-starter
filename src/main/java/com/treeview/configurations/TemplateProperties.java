@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "admin.template")
 public class TemplateProperties {
+    /** 皮肤 **/
     private String skin;
     private String anon;
-    private String enterprise;
     private String locale;
+    private String company;
     private String rootContext;
     private String sessionTimeout;
     private String composeResource;

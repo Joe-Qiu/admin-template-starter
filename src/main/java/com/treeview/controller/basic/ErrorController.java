@@ -1,4 +1,4 @@
-package com.treeview.controller.base;
+package com.treeview.controller.basic;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

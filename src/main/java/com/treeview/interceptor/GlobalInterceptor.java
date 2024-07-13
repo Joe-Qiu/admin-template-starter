@@ -33,7 +33,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
             request.setAttribute("rootContext", templateProperties.getRootContext());
-            request.setAttribute("enterprise", templateProperties.getEnterprise());
+            request.setAttribute("company", templateProperties.getCompany());
 
             Cookie[] cookies = request.getCookies();
 

@@ -1,9 +1,9 @@
-package com.treeview.service.monitor.impl;
+package com.treeview.service.system.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.treeview.entity.monitor.AppLogs;
 import com.treeview.mapper.monitor.AppLogsMapper;
-import com.treeview.service.monitor.AppLogsService;
+import com.treeview.service.system.AppLogsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

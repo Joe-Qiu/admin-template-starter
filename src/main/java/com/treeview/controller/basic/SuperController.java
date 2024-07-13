@@ -1,4 +1,4 @@
-package com.treeview.controller.base;
+package com.treeview.controller.basic;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;

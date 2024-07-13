@@ -2,9 +2,9 @@ package com.treeview.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.treeview.controller.base.SuperController;
+import com.treeview.controller.basic.SuperController;
 import com.treeview.entity.monitor.AppLogs;
-import com.treeview.service.monitor.AppLogsService;
+import com.treeview.service.system.AppLogsService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;

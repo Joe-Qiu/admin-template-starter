@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.treeview.annotation.Logit;
 import com.treeview.entity.monitor.AppLogs;
 import com.treeview.entity.system.UserInfo;
-import com.treeview.service.monitor.AppLogsService;
+import com.treeview.service.system.AppLogsService;
 import com.treeview.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

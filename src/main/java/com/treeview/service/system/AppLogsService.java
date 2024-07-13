@@ -1,4 +1,4 @@
-package com.treeview.service.monitor;
+package com.treeview.service.system;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.treeview.entity.monitor.AppLogs;

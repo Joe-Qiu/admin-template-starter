@@ -1,4 +1,4 @@
-package com.treeview.controller.base;
+package com.treeview.controller.basic;
 
 import com.treeview.entity.framework.Rest;
 import com.wf.captcha.utils.CaptchaUtil;
@@ -8,14 +8,13 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController extends SuperController {
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public String index() {
         return "system/login";
     }

@@ -1,4 +1,4 @@
-package com.treeview.job;
+package com.treeview.schedule;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.treeview.entity.monitor.AppLogs;
