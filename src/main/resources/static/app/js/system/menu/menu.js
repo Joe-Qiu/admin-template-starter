@@ -23,3 +23,19 @@ require.config({
 require(['jquery', 'common'], function ($, common) {
     common._initApplication();
 });
+
+require(['jquery'], function ($, widget, locale) {
+    $("#dir").select2();
+
+    $("#dir").on('change', function () {
+        var pid = $(this).val();
+        $.post('/system/menu/json?_dc=' + new Date().getTime(), {pid: pid}, function (response) {
+            if (response.code == 200) {
+                $("#pid").empty();
+                $("#pid").select2({
+                    data: response.data
+                });
+            }
+        });
+    });
+});

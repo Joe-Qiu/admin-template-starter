@@ -1,5 +1,6 @@
 layui.define(['layer', 'form', 'upload'], function (exports) {
     let $ = layui.jquery, upload = layui.upload, form = layui.form;
+
     //验证
     form.verify({
         username: function (value, item) {
@@ -123,6 +124,7 @@ layui.define(['layer', 'form', 'upload'], function (exports) {
         isSubmitted = true;
         return false;
     });
+
     //监听开关
     form.on('switch(switch)', function (data) {
         layer.tips(data.elem.checked ? '是' : '否', data.othis);
