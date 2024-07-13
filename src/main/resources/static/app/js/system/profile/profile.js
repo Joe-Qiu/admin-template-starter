@@ -24,13 +24,7 @@ require(['jquery', 'common'], function ($, common) {
     common._initApplication();
 });
 
-require(['jquery', 'widget', 'locale', 'select2', 'confirm'], function ($, widget, locale) {
-    $(document).ready(function () {
-        widget._initWidget();
-
-        locale._initLocale();
-    });
-
+require(['jquery', 'select2', 'confirm'], function ($) {
     layui.use(['form', 'jquery'], function () {
         let form = layui.form, layer = layui.layer, $ = layui.jquery;
 

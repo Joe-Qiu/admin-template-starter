@@ -1,8 +1,8 @@
 require.config({
     baseUrl: '/' + window.staticContextPath + '/',
     paths: {
-        jquery: "plugins/jquery/js/jquery.min",
-        layui: "plugins/layui/js/layui",
+        jquery: "plugins/jquery/jquery.min",
+        layui: "plugins/layui/layui",
     },
     shim: {
         layui: {
