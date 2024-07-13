@@ -1,8 +1,7 @@
 <#macro paginate pageData actionUrl urlParas="">
 <div class="dataTables_info" style="padding-top:0px;">
     <span>每页</span>
-    <select class="form-control" name="size" style="width: auto; display: initial;margin: 0 3px; padding: 1px 1px;"
-            onchange="changePage(this)">
+    <select class="form-control" name="size" style="width: auto; display: initial;margin: 0 3px; padding: 1px 1px;" onchange="changePage(this)">
         <option value="10" ${(pageData.size==10)?string('selected="selected"','')}>10</option>
         <option value="20" ${(pageData.size==20)?string('selected="selected"','')}>20</option>
         <option value="50" ${(pageData.size==50)?string('selected="selected"','')}>50</option>
