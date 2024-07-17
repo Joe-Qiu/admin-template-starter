@@ -99,4 +99,14 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     public String getSalt() {
         return RandomStringUtils.randomAlphabetic(20);
     }
+
+    public static void main(String[] args) {
+        String salt = RandomStringUtils.randomAlphabetic(20);
+
+        String username = "adminlte";
+        String password = "adminlte";
+
+        System.out.println(salt);
+        System.out.println(new Md5Hash(username + password + salt).toHex());
+    }
 }
