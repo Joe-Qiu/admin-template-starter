@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <#macro paginate currentPage totalCount sizeNum actionUrl urlParas="">
     <#local totalPage = totalCount / sizeNum + 1>
     <#if (totalCount % sizeNum) == 0>
@@ -23,11 +24,11 @@
 
                 <#if (currentPage == 1)>
                     <li class="paginate_button page-item previous disabled">
-                        <a href="javascript:void(0);" class="page-link">前一页</a>
+                        <a href="javascript:void(0);" class="page-link"><@spring.message code='framework.page.previousPage'/></a>
                     </li>
                 <#else>
                     <li class="paginate_button page-item previous">
-                        <a href="${actionUrl}#{currentPage - 1}${urlParas!}" class="page-link">前一页</a>
+                        <a href="${actionUrl}#{currentPage - 1}${urlParas!}" class="page-link"><@spring.message code='framework.page.previousPage'/></a>
                     </li>
                 </#if>
 
@@ -58,11 +59,11 @@
                 </#if>
                 <#if (currentPage == totalPage)>
                     <li class="paginate_button page-item next disabled">
-                        <a href="javascript:void(0);" class="page-link">下一页</a>
+                        <a href="javascript:void(0);" class="page-link"><@spring.message code='framework.page.nextPage'/></a>
                     </li>
                 <#else>
                     <li class="paginate_button page-item next">
-                        <a href="${actionUrl}#{currentPage + 1}${urlParas!}" class="page-link">下一页</a>
+                        <a href="${actionUrl}#{currentPage + 1}${urlParas!}" class="page-link"><@spring.message code='framework.page.nextPage'/></a>
                     </li>
                 </#if>
         </ul>
