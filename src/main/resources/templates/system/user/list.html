@@ -18,12 +18,12 @@
                                                 <div class="box-header">
                                                     <div class="input-group">
                                                         <@shiro.hasPermission name="addUser">
-                                                            <a class="btn btn-info btn-flat dialog" href="javascript:void(0);" data-url="/system/user/add" data-title="<@spring.message code='system.user.list.createUser'/>" data-width="700" data-height="450">
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:void(0);" data-url="/system/user/add" data-title="<@spring.message code='system.user.common.action.createUser'/>" data-width="700" data-height="450">
                                                                 <i class="fa fa-plus"></i>
-                                                                <@spring.message code='system.user.list.createUser'/>
+                                                                <@spring.message code='system.user.common.action.createUser'/>
                                                             </a>
                                                         </@shiro.hasPermission>
-                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
+                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="<@spring.message code='system.user.placeholder.search'/>">
                                                         <div class="input-group">
                                                             <button class="btn btn-default btn-flat" type="submit">
                                                                 <i class="fa fa-search"></i></button>
@@ -47,22 +47,22 @@
                                                         <@spring.message code='system.user.list.rowNo'/>
                                                     </th>
                                                     <th>
-                                                        <@spring.message code='system.user.list.userName'/>
+                                                        <@spring.message code='system.user.common.userName'/>
                                                     </th>
                                                     <th>
-                                                        <@spring.message code='system.user.list.description'/>
+                                                        <@spring.message code='system.user.common.description'/>
                                                     </th>
                                                     <th>
                                                         <@spring.message code='system.user.list.creationTime'/>
                                                     </th>
                                                     <th>
-                                                        <@spring.message code='system.user.list.department'/>
+                                                        <@spring.message code='system.user.common.department'/>
                                                     </th>
                                                     <th>
-                                                        <@spring.message code='system.user.list.status'/>
+                                                        <@spring.message code='system.user.common.status'/>
                                                     </th>
                                                     <th>
-                                                        <@spring.message code='system.user.list.action'/>
+                                                        <@spring.message code='system.user.common.action'/>
                                                     </th>
                                                 </tr>
                                                 <#list pageData.getRecords() as user>
@@ -83,17 +83,17 @@
                                                         <td>${(user.dept_name)!'--'}</td>
                                                         <td>
                                                             <#if user.status=='1'>
-                                                                <@spring.message code='system.user.list.status.effective'/>
+                                                                <@spring.message code='system.user.common.status.enable'/>
                                                             <#else>
-                                                                <@spring.message code='system.user.list.status.expired'/>
+                                                                <@spring.message code='system.user.common.status.disable'/>
                                                             </#if>
                                                         </td>
                                                         <td>
                                                             <@shiro.hasPermission name="editUser">
-                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:;" data-url="/system/user/edit/${(user.id)!}" data-title="<@spring.message code='system.user.list.action.editUser'/>" data-width="700" data-height="450"><@spring.message code='system.user.list.action.edit'/></a>
+                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:;" data-url="/system/user/edit/${(user.id)!}" data-title="<@spring.message code='system.user.common.action.editUser'/>" data-width="700" data-height="450"><@spring.message code='system.user.common.action.edit'/></a>
                                                             </@shiro.hasPermission>
                                                             <@shiro.hasPermission name="deleteUser">
-                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax" data-submit-url="/system/user/delete?id=${(user.id)!}" data-confirm="<@spring.message code='system.user.list.message.deleteUser'/>"><@spring.message code='system.user.list.action.delete'/></a>
+                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax" data-submit-url="/system/user/delete?id=${(user.id)!}" data-confirm="<@spring.message code='system.user.list.message.deleteUser'/>"><@spring.message code='system.user.common.action.delete'/></a>
                                                             </@shiro.hasPermission>
                                                         </td>
                                                     </tr>

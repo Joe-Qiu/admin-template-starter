@@ -1,6 +1,6 @@
 <#include "/include/layout_ff.html">
-<@header>
-</@header>
+<#import "/spring.ftl" as spring/>
+<@header></@header>
 <body>
 <section class="content">
     <div class="container-fluid">
@@ -9,16 +9,16 @@
                 <div class="box-body">
                     <div class="form-group">
                         <div style="display:flex;">
-                            <label for="uname" class="col-sm-1 control-label">用户</label>
-                            <div class="col-sm-11">
-                                <input type="text" id="uname" name="userName" class="form-control" placeholder="请输入用户名" lay-verify="required|name|check" check-url="/system/user/checkName">
+                            <label for="uname" class="col-sm-3 control-label text-right mt-2" ><@spring.message code='system.user.common.userName'/>:</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="uname" name="userName" class="form-control" placeholder="<@spring.message code='system.user.placeholder.name'/>" lay-verify="required|name|check" check-url="/system/user/checkName">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div style="display:flex;">
-                            <label class="col-sm-1 control-label">部门</label>
-                            <div class="col-sm-11">
+                            <label class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.department'/>:</label>
+                            <div class="col-sm-9">
                                 <select name="deptId" class="form-control select2" style="width: 100%;" lay-verify="required">
                                     <#list deptList as dept>
                                         <option value="${(dept.id)!}">${(dept.deptName)!}</option>
@@ -29,31 +29,33 @@
                     </div>
                     <div class="form-group">
                         <div style="display:flex;">
-                            <label class="col-sm-1 control-label">描述</label>
-                            <div class="col-sm-11">
-                                <textarea class="form-control" name="remark" rows="3" placeholder="请输入描述，最多300个字符 ..."></textarea>
+                            <label class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.description'/>:</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="remark" rows="3" placeholder="<@spring.message code='system.user.placeholder.description'/>"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div style="display:flex;">
-                            <label class="col-sm-1 control-label">状态</label>
-                            <div class="col-sm-11">
+                            <label class="col-sm-3 control-label text-right"><@spring.message code='system.user.common.status'/>:</label>
+                            <div class="col-sm-9">
                                 <label>
-                                    <input name="status" type="radio" class="minimal" lay-ignore checked value="1">启用
+                                    <input name="status" type="radio" class="minimal" lay-ignore checked value="1">
+                                    <@spring.message code='system.user.common.status.enable'/>
                                 </label>
                                 <label>
-                                    <input name="status" type="radio" class="minimal" lay-ignore value="-1">禁用
+                                    <input name="status" type="radio" class="minimal" lay-ignore value="-1">
+                                    <@spring.message code='system.user.common.status.disable'/>
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div style="display:flex;">
-                            <label class="col-sm-1 control-label">角色</label>
-                            <div class="col-sm-11">
+                            <label class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.role'/>:</label>
+                            <div class="col-sm-9">
                                 <#list roleList as role>
-                                    <label title="${(role.roleDesc)!}">
+                                    <label title="${(role.roleDesc)!}" class="mt-2">
                                         <input type="checkbox" name="roleIds" class="minimal" value="${(role.id)!}" lay-ignore >
                                         ${(role.roleName)!}
                                     </label>
@@ -62,8 +64,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-12">
-                            <button type="button" name="save" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 提 交</button>
+                        <div style="display:flex;">
+                            <div class="col-sm-3">
+                                &nbsp;
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" name="save" class="btn btn-success" lay-submit lay-filter="submit">
+                                    <i class="fa fa-save"></i>
+                                    <@spring.message code='system.user.common.action.submit'/></button>
+                            </div>
                         </div>
                     </div>
                 </div>
