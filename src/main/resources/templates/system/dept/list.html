@@ -1,5 +1,6 @@
 <#include "/include/header.html">
 <#include "/include/scripts.html">
+<#import "/spring.ftl" as spring/>
 <html>
 <@header></@header>
 <body class="gray-bg">
@@ -17,8 +18,8 @@
                                                 <div class="box-header">
                                                     <div class="input-group">
                                                         <@shiro.hasPermission name="addDept">
-                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;" data-title="创建部门"
-                                                               data-url="/system/dept/add" data-width="650" data-height="300"><i class="fa fa-plus"></i>创建部门</a>
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;" data-title="<@spring.message code='system.department.common.action.createDepartment'/>"
+                                                               data-url="/system/dept/add" data-width="650" data-height="300"><i class="fa fa-plus"></i><@spring.message code='system.department.common.action.createDepartment'/></a>
                                                         </@shiro.hasPermission>
                                                         <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
                                                         <div class="input-group">
@@ -34,10 +35,10 @@
                                         <div class="col-sm-12">
                                             <table class="table table-bordered table-hover dataTable dtr-inline">
                                                 <tr>
-                                                    <th>行号</th>
-                                                    <th>部门名称</th>
-                                                    <th>描述</th>
-                                                    <th>操作</th>
+                                                    <th><@spring.message code='system.department.list.rowNo'/></th>
+                                                    <th><@spring.message code='system.department.common.departmentName'/></th>
+                                                    <th><@spring.message code='system.department.common.description'/></th>
+                                                    <th><@spring.message code='system.department.common.action'/></th>
                                                 </tr>
                                                 <#list pageData.getRecords() as dept>
                                                     <tr>
@@ -46,13 +47,13 @@
                                                         <td>${(dept.deptDesc)!'--'}</td>
                                                         <td>
                                                             <@shiro.hasPermission name="editDept">
-                                                                <a class="btn btn-primary btn-xs dialog" data-title="编辑部门" data-url="/system/dept/edit/${(dept.id)!}" data-width="650" data-height="300">
-                                                                    <i class="fa fa-pencil-square-o"></i>编辑
+                                                                <a class="btn btn-primary btn-xs dialog" data-title="<@spring.message code='system.department.common.action.editDepartment'/>" data-url="/system/dept/edit/${(dept.id)!}" data-width="650" data-height="300">
+                                                                    <i class="fa fa-pencil-square-o"></i><@spring.message code='system.department.common.action.edit'/>
                                                                 </a>
                                                             </@shiro.hasPermission>
                                                             <@shiro.hasPermission name="deleteDept">
                                                                 <a class="btn btn-danger btn-xs" data-tiggle="ajax" data-submit-url="/system/dept/delete?id=${(dept.id)!}"
-                                                                   data-confirm="您确定要删除该条记录吗?"><i class="fa fa-times"></i>删除</a>
+                                                                   data-confirm="您确定要删除该条记录吗?"><i class="fa fa-times"></i><@spring.message code='system.department.common.action.delete'/></a>
                                                             </@shiro.hasPermission>
                                                         </td>
                                                     </tr>
