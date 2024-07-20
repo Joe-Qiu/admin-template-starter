@@ -1,4 +1,4 @@
-define(["jquery", "widget", "locale", "pace", "overlayScrollbars"], function ($, widget, locale) {
+define(["jquery", "widget", "locale", "select2", "pace", "overlayScrollbars"], function ($, widget, locale) {
 
     let exports = {};
 

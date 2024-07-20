@@ -9,7 +9,7 @@
         <option value="100" ${(pageData.size==100)?string('selected="selected"','')}>100</option>
     </select>
     <span><@spring.message code='framework.page.records'/></span>
-    <span><@spring.message code='framework.page.show'/>&nbsp;&nbsp;${((pageData.current -1) * pageData.size + 1)!}&nbsp;~&nbsp;${(pageData.current * pageData.size)!}&nbsp;&nbsp;<@spring.message code='framework.page.records'/>&nbsp;<@spring.message code='framework.page.total'/>&nbsp;${(pageData.getTotal())!}&nbsp;<@spring.message code='framework.page.recordNum'/></span>
+    <span><@spring.message code='framework.page.showing'/>&nbsp;&nbsp;${((pageData.current -1) * pageData.size + 1)!}~${(pageData.current * pageData.size)!}<@spring.message code='framework.page.records'/>&nbsp;<@spring.message code='framework.page.total'/>&nbsp;${(pageData.getTotal())!}&nbsp;<@spring.message code='framework.page.recordNum'/></span>
 </div>
 <script>
     function changePage(obj) {

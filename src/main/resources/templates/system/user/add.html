@@ -16,10 +16,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div style="display:flex;">
+                        <div style="display:flex;">∫
                             <label class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.department'/>:</label>
                             <div class="col-sm-9">
-                                <select name="deptId" class="form-control select2" style="width: 100%;" lay-verify="required">
+                                <select name="deptId" class="form-control" style="width: 100%; height: 35px;" lay-verify="required">
                                     <#list deptList as dept>
                                         <option value="${(dept.id)!}">${(dept.deptName)!}</option>
                                     </#list>
