@@ -11,7 +11,7 @@
                     <label for="uname" class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.userName'/>:</label>
                     <input type="hidden" value="${userInfo.id}" name="id">
                     <div class="col-sm-9">
-                        <input type="text" id="uname" name="userName" value="${(userInfo.userName)!}" class="form-control" placeholder="<@spring.message code='system.user.placeholder.name'/>" lay-verify="required|username">
+                        <input type="text" id="uname" name="userName" value="${(userInfo.userName)!}" class="form-control" placeholder="<@spring.message code='system.user.placeholder.username'/>" lay-verify="required|username">
                     </div>
                 </div>
             </div>
