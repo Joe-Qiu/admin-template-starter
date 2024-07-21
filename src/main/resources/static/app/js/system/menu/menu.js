@@ -24,7 +24,9 @@ require(['jquery', 'common'], function ($, common) {
     common._initApplication();
 });
 
-require(['jquery'], function ($, widget, locale) {
+require(['jquery', 'select2'], function ($) {
+    $(".select2").select2();
+
     $("#dir").select2();
 
     $("#dir").on('change', function () {

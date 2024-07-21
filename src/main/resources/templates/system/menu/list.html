@@ -18,7 +18,9 @@
                                                 <div class="box-header">
                                                     <div class="input-group">
                                                         <@shiro.hasPermission name="addMenu">
-                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;" data-title="<@spring.message code='system.menu.comm.action.createMenu'/>" data-url="/system/menu/add" data-width="600" data-height="400">
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;"
+                                                               data-title="<@spring.message code='system.menu.comm.action.createMenu'/>"
+                                                               data-url="/system/menu/add" data-width="600" data-height="400">
                                                                 <i class="fa fa-plus"></i>
                                                                 <@spring.message code='system.menu.comm.action.createMenu'/>
                                                             </a>
@@ -72,12 +74,23 @@
                                                         <td>${(menu.deep)!}</td>
                                                         <td>${(menu.resource)!"--"}</td>
                                                         <td>${(menu.sort)!}</td>
-                                                        <td><#if menu.deep?? && menu.deep==1 >目录<#elseif menu.deep?? && menu.deep==2>菜单<#else>功能</#if></td>
+                                                        <td>
+                                                            <#if menu.deep?? && menu.deep==1>
+                                                                <@spring.message code='system.menu.list.directory'/>
+                                                            <#elseif menu.deep?? && menu.deep==2>
+                                                                <@spring.message code='system.menu.list.menu'/>
+                                                            <#else>
+                                                                <@spring.message code='system.menu.list.function'/>
+                                                            </#if>
+                                                        </td>
                                                         <td>
                                                             <@shiro.hasPermission name="editMenu">
-                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:void(0);" data-title="<@spring.message code='system.menu.comm.action.editMenu'/>"
+                                                                <a class="btn btn-primary btn-xs dialog" href="javascript:void(0);"
+                                                                   data-title="<@spring.message code='system.menu.comm.action.editMenu'/>"
                                                                    data-url="/system/menu/edit/${(menu.id)!}" data-width="700" data-height="500"
-                                                                   data-toggle="tooltip" title="<@spring.message code='system.menu.comm.action.edit'/>" data-placement="bottom"><@spring.message code='system.menu.comm.action.edit'/>
+                                                                   data-toggle="tooltip" title="<@spring.message code='system.menu.comm.action.edit'/>"
+                                                                   data-placement="bottom">
+                                                                    <@spring.message code='system.menu.comm.action.edit'/>
                                                                 </a>
                                                             </@shiro.hasPermission>
                                                             <@shiro.hasPermission name="deleteMenu">
@@ -103,7 +116,7 @@
                                             <@paginate currentPage=pageData.getCurrent() totalCount=pageData.getTotal() sizeNum=pageData.getSize()
                                             actionUrl="/system/menu/list/" urlParas="?search=${search!}&pageSize=${pageSize!}" />
                                         </div>
-                                </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
