@@ -181,7 +181,7 @@
                                                 <div class="col-sm-9">
                                                     <select id="dir" class="form-control select2" style="width: 100%;" lay-verify="required" lay-ignore>
                                                         <option value="" selected="selected">
-                                                            <@spring.message code='system.menu.add.select'/>
+                                                            <@spring.message code='system.menu.comm.select'/>
                                                         </option>
                                                         <#list list as m>
                                                             <option value="${(m.id)!}">${(m.code)!}-${(m.name)!}</option>
@@ -189,7 +189,7 @@
                                                     </select>
                                                     <select id="pid" name="pid" class="form-control select2" style="width: 100%;" lay-verify="required" lay-ignore>
                                                         <option value="" selected="selected">
-                                                            <@spring.message code='system.menu.add.select'/>
+                                                            <@spring.message code='system.menu.comm.select'/>
                                                         </option>
                                                     </select>
                                                 </div>
@@ -259,5 +259,4 @@
     </div>
 </section>
 <@scripts "/${rootContext}/app/js/system/menu/menu.js"></@scripts>
-
 </body>
