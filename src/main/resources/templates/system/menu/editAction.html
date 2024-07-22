@@ -14,7 +14,7 @@
                                 <@spring.message code='system.menu.add.action.chooseMenu'/>:
                             </label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" lay-verify="required" lay-ignore>
+                                <select id="dir" class="form-control select2" lay-verify="required" lay-ignore>
                                     <option value="" selected="selected"><@spring.message code='system.menu.comm.select'/></option>
                                     <#list list as m>
                                         <option value="${(m.id)!}" ${(m.id==pSysMenu.pid)?string('selected="selected"','')}>${(m.code)!}-${(m.name)!}

@@ -27,8 +27,6 @@ require(['jquery', 'common'], function ($, common) {
 require(['jquery', 'select2'], function ($) {
     $(".select2").select2();
 
-    $("#dir").select2();
-
     $("#dir").on('change', function () {
         var pid = $(this).val();
         $.post('/system/menu/json?_dc=' + new Date().getTime(), {pid: pid}, function (response) {
