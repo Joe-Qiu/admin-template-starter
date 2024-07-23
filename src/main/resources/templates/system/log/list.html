@@ -1,5 +1,6 @@
 <#include "/include/header.html">
 <#include "/include/scripts.html">
+<#import "/spring.ftl" as spring/>
 <html>
 <@header></@header>
 <body class="gray-bg">
@@ -15,12 +16,24 @@
                                         <div class="col-sm-12">
                                             <table class="table table-bordered table-hover dataTable dtr-inline">
                                                 <tr>
-                                                    <th>行号</th>
-                                                    <th>日志操作</th>
-                                                    <th>用户</th>
-                                                    <th>地址</th>
-                                                    <th>时间</th>
-                                                    <th>操作</th>
+                                                    <th>
+                                                        <@spring.message code='system.log.list.rowNo'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.log.list.operation'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.log.list.user'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.log.list.url'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.log.list.logDateTime'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.log.list.action'/>
+                                                    </th>
                                                 </tr>
                                                 <#list pageData.getRecords() as log>
                                                     <tr>
@@ -31,8 +44,8 @@
                                                         <td>${(log.createTime?string('yyyy/MM/dd HH:mm:ss'))!}</td>
                                                         <td>
                                                             <a class="btn btn-xs dialog"
-                                                               data-title="参数"
-                                                               data-url="/system/log/params/${log.id}">查看参数</a>
+                                                               data-title="<@spring.message code='system.log.list.action.viewParam'/>"
+                                                               data-url="/system/log/params/${log.id}"><@spring.message code='system.log.list.action.viewParam'/></a>
                                                         </td>
                                                     </tr>
                                                 </#list>

@@ -29,13 +29,13 @@ public class LogController extends SuperController {
         model.addAttribute("pageSize", pageSize);
 
         final QueryWrapper<AppLogs> ew = new QueryWrapper<>();
-        ew.like("username", search);
-        ew.or();
-        ew.like("details", search);
         ew.orderByDesc("create_time");
 
         if (StringUtils.isNotBlank(search)) {
-            this.appLogsService.page(page, ew);
+            ew.like("username", search);
+            ew.or();
+            ew.like("details", search);
+
             model.addAttribute("search", search);
         }
 

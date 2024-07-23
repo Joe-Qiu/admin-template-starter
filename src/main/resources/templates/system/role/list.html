@@ -50,7 +50,7 @@
                                                 <tr>
                                                     <th>
                                                         <input value="root" type="checkbox" class="minimal checkbox-toolbar">
-                                                        <@spring.message code='system.row.list.rowNo'/>
+                                                        <@spring.message code='system.role.list.rowNo'/>
                                                     </th>
                                                     <th><@spring.message code='system.role.common.roleName'/></th>
                                                     <th><@spring.message code='system.role.common.description'/></th>
@@ -70,10 +70,10 @@
                                                             <#assign args = ['${(role.roleName)!}']>
                                                             <a class="btn btn-xs dialog"
                                                                data-wdith="800"
-                                                               data-title="<@spring.messageArgs 'system.row.list.roleUserList' args/>"
+                                                               data-title="<@spring.messageArgs 'system.role.list.roleUserList' args/>"
                                                                data-url="/system/role/getUsers?roleId=${role.id}">
                                                                 <span>
-                                                                    <@spring.message code='system.row.list.viewUser'/>
+                                                                    <@spring.message code='system.role.list.viewUser'/>
                                                                 </span>
                                                             </a>
                                                         </td>
@@ -108,7 +108,7 @@
                                                                    title="<@spring.message code='system.role.common.action.delete'/>" data-placement="bottom"
                                                                    data-tiggle="ajax"
                                                                    data-submit-url="/system/role/delete?id=${(role.id)!}"
-                                                                   data-confirm="<@spring.message code='system.row.list.message.deleteRole'/>">
+                                                                   data-confirm="<@spring.message code='system.role.list.message.deleteRole'/>">
                                                                     <@spring.message code='system.role.common.action.delete'/>
                                                                 </a>
                                                             </@shiro.hasPermission>
