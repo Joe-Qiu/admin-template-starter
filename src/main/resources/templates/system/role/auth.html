@@ -1,11 +1,6 @@
 <#include "/include/layout_ff.html">
-<@header>
-    <style>
-        td > label {
-            padding: 3px;
-        }
-    </style>
-</@header>
+<#import "/spring.ftl" as spring/>
+<@header></@header>
 <body>
 <section class="content">
     <div class="container-fluid">
@@ -40,8 +35,14 @@
                         </table>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-success" lay-submit lay-filter="submit"><i class="fa fa-save"></i> 确认授权</button>
-                        <a class="btn btn-default" href="javascript:parent.layer.closeAll('iframe');"><i class="fa fa-angle-left"></i> 返回</a>
+                        <button type="submit" class="btn btn-success" lay-submit lay-filter="submit">
+                            <i class="fa fa-save"></i>
+                            <@spring.message code='system.role.common.action.authorize'/>
+                        </button>
+                        <a class="btn btn-default" href="javascript:parent.layer.closeAll('iframe');">
+                            <i class="fa fa-angle-left"></i>
+                            <@spring.message code='system.role.common.action.cancel'/>
+                        </a>
                     </div>
                 </div>
             </form>

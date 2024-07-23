@@ -1,25 +1,41 @@
 <#include "/include/layout_ff.html">
-<@header>
-</@header>
+<#import "/spring.ftl" as spring/>
+<@header></@header>
 <body>
 <section class="content">
     <div class="container-fluid">
         <div class="card-body"/>
             <table class="table table-bordered table-hover dataTable dtr-inline">
             <tr>
-             <th>用户名</th>
-             <th>描述</th>
-             <th>创建时间</th>
-             <th>状态</th>
+             <th>
+                 <@spring.message code='system.user.common.userName'/>
+             </th>
+             <th>
+                 <@spring.message code='system.user.common.description'/>
+             </th>
+             <th>
+                 <@spring.message code='system.user.list.creationTime'/>
+             </th>
+             <th>
+                 <@spring.message code='system.user.common.status'/>
+             </th>
             </tr>
-            <#list users as user>
-              <tr>
-                  <td>${(user.userName)!}</td>
-                  <td>${(user.remark)!'--'}</td>
-                  <td>${(user.createTime?string('yyyy/MM/dd HH:mm:ss'))!}</td>
-                  <td><#if user.status=='0'>启用<#else><font color="red">禁用</font></#if></td>
-              </tr>
-            </#list>
+                <#list users as user>
+                    <tr>
+                        <td>${(user.userName)!}</td>
+                        <td>${(user.remark)!'--'}</td>
+                        <td>${(user.createTime?string('yyyy/MM/dd HH:mm:ss'))!}</td>
+                        <td>
+                            <#if user.status=='0'>
+                                <@spring.message code='system.role.common.status.enabled'/>
+                            <#else>
+                                <style="color: red">
+                                    <@spring.message code='system.role.common.status.disabled'/>
+                                </style>
+                            </#if>
+                        </td>
+                    </tr>
+                </#list>
             </table>
         </div>
     </div>
