@@ -94,10 +94,10 @@
                                                                 </a>
                                                             </@shiro.hasPermission>
                                                             <@shiro.hasPermission name="deleteMenu">
-                                                                <a class="btn btn-danger btn-xs" data-toggle="tooltip" title="<@spring.message code='system.menu.comm.action.delete'/>" data-placement="bottom"
-                                                                   data-tiggle="ajax"
-                                                                   data-submit-url="/system/menu/delete?id=${(menu.id)!}"
-                                                                   data-confirm="<@spring.message code='system.menu.list.message.deleteMenu'/>"><@spring.message code='system.menu.comm.action.delete'/>
+                                                                <a class="btn btn-danger btn-xs" data-toggle="tooltip" title="<@spring.message code='system.menu.comm.action.delete'/>"
+                                                                   data-placement="bottom" data-tiggle="ajax" data-submit-url="/system/menu/delete?id=${(menu.id)!}"
+                                                                   data-confirm="<@spring.message code='system.common.message.delete'/>">
+                                                                    <@spring.message code='system.menu.comm.action.delete'/>
                                                                 </a>
                                                             </@shiro.hasPermission>
                                                         </td>

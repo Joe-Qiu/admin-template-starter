@@ -43,9 +43,11 @@
                                                         <td>${(log.url)!'--'}</td>
                                                         <td>${(log.createTime?string('yyyy/MM/dd HH:mm:ss'))!}</td>
                                                         <td>
-                                                            <a class="btn btn-xs dialog"
+                                                            <a class="btn btn-primary btn-xs dialog"
                                                                data-title="<@spring.message code='system.log.list.action.viewParam'/>"
-                                                               data-url="/system/log/params/${log.id}"><@spring.message code='system.log.list.action.viewParam'/></a>
+                                                               data-url="/system/log/params/${log.id}">
+                                                                <@spring.message code='system.log.list.action.viewParam'/>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 </#list>

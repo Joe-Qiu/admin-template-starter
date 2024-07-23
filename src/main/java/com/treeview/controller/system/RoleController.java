@@ -138,13 +138,17 @@ public class RoleController extends SuperController {
 
     @RequestMapping({"/getUsers"})
     public String getUsers(String roleId, Model model) {
-        List<UserRole> userRoles = this.userRoleService.list((Wrapper)(new QueryWrapper()).eq("role_id", roleId));
-        List<Long> userIds = userRoles.stream().map((input) -> input.getUserId()).collect(Collectors.toList());
+        final QueryWrapper<UserRole> ew = new QueryWrapper();
+        ew.eq("role_id", roleId);
+
+        final List<UserRole> userRoles = this.userRoleService.list(ew);
+        final List<Long> userIds = userRoles.stream().map((input) -> input.getUserId()).collect(Collectors.toList());
+
         List<UserInfo> users = new ArrayList();
         if (userIds.size() > 0) {
-            QueryWrapper<UserInfo> ew = new QueryWrapper();
-            ew.in("id", userIds);
-            users = this.userInfoService.list(ew);
+            QueryWrapper<UserInfo> ewUser = new QueryWrapper();
+            ewUser.in("id", userIds);
+            users = this.userInfoService.list(ewUser);
         }
 
         model.addAttribute("users", users);

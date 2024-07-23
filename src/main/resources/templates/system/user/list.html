@@ -23,10 +23,11 @@
                                                                 <@spring.message code='system.user.common.action.createUser'/>
                                                             </a>
                                                         </@shiro.hasPermission>
-                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="<@spring.message code='system.user.placeholder.search'/>">
+                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="<@spring.message code='system.user.placeholder.search'/>" autocomplete="off">
                                                         <div class="input-group">
                                                             <button class="btn btn-default btn-flat" type="submit">
-                                                                <i class="fa fa-search"></i></button>
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
                                                             <a href="/system/user/list/1" class="btn btn-default">
                                                                 <i class="fa fa-sync" style="margin-top:6px;"></i>
                                                             </a>
@@ -93,7 +94,7 @@
                                                                 <a class="btn btn-primary btn-xs dialog" href="javascript:;" data-url="/system/user/edit/${(user.id)!}" data-title="<@spring.message code='system.user.common.action.editUser'/>" data-width="700" data-height="450"><@spring.message code='system.user.common.action.edit'/></a>
                                                             </@shiro.hasPermission>
                                                             <@shiro.hasPermission name="deleteUser">
-                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax" data-submit-url="/system/user/delete?id=${(user.id)!}" data-confirm="<@spring.message code='system.user.list.message.deleteUser'/>"><@spring.message code='system.user.common.action.delete'/></a>
+                                                                <a class="btn btn-danger btn-xs" data-tiggle="ajax" data-submit-url="/system/user/delete?id=${(user.id)!}" data-confirm="<@spring.message code='system.common.message.delete'/>"><@spring.message code='system.user.common.action.delete'/></a>
                                                             </@shiro.hasPermission>
                                                         </td>
                                                     </tr>

@@ -31,7 +31,7 @@
                                                             </a>
                                                         </@shiro.hasPermission>
                                                         <div class="input-group">
-                                                            <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
+                                                            <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search" autocomplete="off">
                                                             <button class="btn btn-default btn-flat" type="submit">
                                                                 <i class="fa fa-search"></i>
                                                             </button>
@@ -108,7 +108,7 @@
                                                                    title="<@spring.message code='system.role.common.action.delete'/>" data-placement="bottom"
                                                                    data-tiggle="ajax"
                                                                    data-submit-url="/system/role/delete?id=${(role.id)!}"
-                                                                   data-confirm="<@spring.message code='system.role.list.message.deleteRole'/>">
+                                                                   data-confirm="<@spring.message code='system.common.message.delete'/>">
                                                                     <@spring.message code='system.role.common.action.delete'/>
                                                                 </a>
                                                             </@shiro.hasPermission>

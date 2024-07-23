@@ -8,10 +8,14 @@
         <form class="form-horizontal layui-form layui-form-pane" method="post" action="/system/user/doEdit">
             <div class="form-group">
                 <div style="display:flex;">
-                    <label for="uname" class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.userName'/>:</label>
+                    <label class="col-sm-3 control-label text-right mt-2">
+                        <@spring.message code='system.user.common.userName'/>:
+                    </label>
                     <input type="hidden" value="${userInfo.id}" name="id">
                     <div class="col-sm-9">
-                        <input type="text" id="uname" name="userName" value="${(userInfo.userName)!}" class="form-control" placeholder="<@spring.message code='system.user.placeholder.username'/>" lay-verify="required|username">
+                        <input type="text" name="userName" value="${(userInfo.userName)!}" class="form-control"
+                               placeholder="<@spring.message code='system.user.placeholder.username'/>"
+                               lay-verify="required|username">
                     </div>
                 </div>
             </div>
@@ -32,7 +36,7 @@
                 <div style="display:flex;">
                     <label class="col-sm-3 control-label text-right mt-2"><@spring.message code='system.user.common.description'/>:</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" name="userDesc" rows="3" placeholder="<@spring.message code='system.user.placeholder.description'/>">${(userInfo.remark)!}</textarea>
+                        <textarea class="form-control" name="userDesc" rows="3" placeholder="<@spring.message code='system.common.placeholder.description'/>">${(userInfo.remark)!}</textarea>
                     </div>
                 </div>
             </div>
@@ -72,7 +76,12 @@
                     <div class="col-sm-9">
                         <button type="button" name="save" class="btn btn-success" lay-submit lay-filter="submit">
                             <i class="fa fa-save"></i>
-                            <@spring.message code='system.user.common.action.submit'/></button>
+                            <@spring.message code='system.common.action.submit'/>
+                        </button>
+                        <a class="btn btn-default" href="javascript:parent.layer.closeAll('iframe');">
+                            <i class="fa fa-angle-left"></i>
+                            <@spring.message code='system.common.action.cancel'/>
+                        </a>
                     </div>
                 </div>
             </div>
