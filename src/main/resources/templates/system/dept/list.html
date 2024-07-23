@@ -18,13 +18,17 @@
                                                 <div class="box-header">
                                                     <div class="input-group">
                                                         <@shiro.hasPermission name="addDept">
-                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;" data-title="<@spring.message code='system.department.common.action.createDepartment'/>"
-                                                               data-url="/system/dept/add" data-width="650" data-height="300"><i class="fa fa-plus"></i><@spring.message code='system.department.common.action.createDepartment'/></a>
+                                                            <a class="btn btn-info btn-flat dialog" href="javascript:;"
+                                                               data-title="<@spring.message code='system.department.common.action.createDepartment'/>"
+                                                               data-url="/system/dept/add" data-width="650" data-height="300">
+                                                                <i class="fa fa-plus"></i>
+                                                                <@spring.message code='system.department.common.action.createDepartment'/>
+                                                            </a>
                                                         </@shiro.hasPermission>
-                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="<@spring.message code='system.department.placeholder.search'/>">
+                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="<@spring.message code='system.common.placeholder.search'/>" autocomplete="off">
                                                         <div class="input-group">
                                                             <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                                                            <a href="/system/dept/list/1" class="btn btn-default"><i class="fa fa-sync" style="margin-top:6px;"></i></a>
+                                                            <a href="/system/dept/list/1" class="btn btn-default mt-2"><i class="fa fa-sync"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

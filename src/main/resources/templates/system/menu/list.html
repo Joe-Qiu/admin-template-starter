@@ -25,7 +25,7 @@
                                                                 <@spring.message code='system.menu.comm.action.createMenu'/>
                                                             </a>
                                                         </@shiro.hasPermission>
-                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="Search">
+                                                        <input type="text" name="search" value="${search!}" class="form-control" placeholder="<@spring.message code='system.common.placeholder.search'/>" autocomplete="off">
                                                         <div class="input-group">
                                                             <button class="btn btn-default btn-flat" type="submit">
                                                                 <i class="fa fa-search"></i>
@@ -47,15 +47,33 @@
                                                         <input value="root" type="checkbox" class="minimal checkbox-toolbar">
                                                         <@spring.message code='system.menu.list.rowNo'/>
                                                     </th>
-                                                    <th><@spring.message code='system.menu.comm.name'/></th>
-                                                    <th><@spring.message code='system.menu.comm.code'/></th>
-                                                    <th><@spring.message code='system.menu.comm.url'/></th>
-                                                    <th><@spring.message code='system.menu.comm.icon'/></th>
-                                                    <th><@spring.message code='system.menu.comm.depth'/></th>
-                                                    <th><@spring.message code='system.menu.comm.resource'/></th>
-                                                    <th><@spring.message code='system.menu.comm.order'/></th>
-                                                    <th><@spring.message code='system.menu.comm.type'/></th>
-                                                    <th><@spring.message code='system.menu.comm.action'/></th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.name'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.code'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.url'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.icon'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.depth'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.resource'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.order'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.type'/>
+                                                    </th>
+                                                    <th>
+                                                        <@spring.message code='system.menu.comm.action'/>
+                                                    </th>
                                                 </tr>
                                                 <#list pageData.getRecords() as menu>
                                                     <tr>
