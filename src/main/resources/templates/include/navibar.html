@@ -7,19 +7,21 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto align-items-center">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle selected-lang" data-toggle="dropdown" href="#" aria-expanded="false" data-lang="zh_CN">
-                    <i class="flag-icon flag-icon-cn"></i>
-                </a>
-                <div id="changeLang" class="dropdown-menu dropdown-menu-right p-0" style="left: inherit; right: 0px;">
-                    <a href="#" class="nav-link dropdown-item" data-lang="zh_CN" data-flag="cn">
-                        <i class="flag-icon flag-icon-cn mr-2"></i>中文
+            <#if multiLanguage>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle selected-lang" data-toggle="dropdown" href="#" aria-expanded="false" data-lang="zh_CN">
+                        <i class="flag-icon flag-icon-cn"></i>
                     </a>
-                    <a href="#" class="nav-link dropdown-item" data-lang="en_US" data-flag="us">
-                        <i class="flag-icon flag-icon-us mr-2"></i>English
-                    </a>
-                </div>
-            </li>
+                    <div id="changeLang" class="dropdown-menu dropdown-menu-right p-0" style="left: inherit; right: 0px;">
+                        <a href="#" class="nav-link dropdown-item" data-lang="zh_CN" data-flag="cn">
+                            <i class="flag-icon flag-icon-cn mr-2"></i>中文
+                        </a>
+                        <a href="#" class="nav-link dropdown-item" data-lang="en_US" data-flag="us">
+                            <i class="flag-icon flag-icon-us mr-2"></i>English
+                        </a>
+                    </div>
+                </li>
+            </#if>
             <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="javascript:void(0);" role="button">
                     <div class="d-flex align-items-center">

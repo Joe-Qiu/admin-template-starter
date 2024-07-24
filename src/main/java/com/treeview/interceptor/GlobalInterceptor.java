@@ -34,6 +34,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod) {
             request.setAttribute("rootContext", templateProperties.getRootContext());
             request.setAttribute("company", templateProperties.getCompany());
+            request.setAttribute("multiLanguage", templateProperties.getMultiLanguage());
 
             Cookie[] cookies = request.getCookies();
 

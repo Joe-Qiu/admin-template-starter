@@ -12,6 +12,7 @@ public class TemplateProperties {
     private String skin;
     private String anon;
     private String locale;
+    private Boolean multiLanguage = true;
     private String company;
     private String rootContext;
     private String sessionTimeout;
