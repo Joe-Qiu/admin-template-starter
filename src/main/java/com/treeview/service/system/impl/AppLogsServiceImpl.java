@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Slf4j
-@Service("appLogsService")
+@Service()
 public class AppLogsServiceImpl extends ServiceImpl<AppLogsMapper, AppLogs> implements AppLogsService {
     public void insertLog(String details, String uname, String url, String parms) {
         final AppLogs appLogs = new AppLogs();

@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("menuConfigService")
+@Service()
 public class MenuConfigServiceImpl extends ServiceImpl<MenuConfigMapper, MenuConfig> implements MenuConfigService {
     @Resource
     private MenuConfigMapper menuConfigMapper;

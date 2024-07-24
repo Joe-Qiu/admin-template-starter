@@ -36,6 +36,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.LocaleResolver;
@@ -292,5 +296,17 @@ public class AutoConfiguration implements WebMvcConfigurer {
         messageSource.setBasenames(bundles.toArray(new String[0]));
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
+
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+
+        template.afterPropertiesSet();
+        return template;
     }
 }
