@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.treeview.enums.SessionCacheType;
 import com.treeview.interceptor.GlobalInterceptor;
 import com.treeview.shiro.SaasRealm;
-import com.treeview.shiro.ShiroSessionDao;
 import com.treeview.shiro.ShiroTagFreeMarkerConfigurer;
 import com.treeview.shiro.TemplateSessionValidationScheduler;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +24,11 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -65,10 +67,6 @@ public class AutoConfiguration implements WebMvcConfigurer {
     private SaasRealm saasRealm;
 
     @Resource
-    @Lazy
-    private ShiroSessionDao shiroSessionDao;
-    @Resource
-
     private TemplateProperties templateProperties;
 
     @Resource
@@ -77,6 +75,12 @@ public class AutoConfiguration implements WebMvcConfigurer {
 
     @Resource
     private GlobalInterceptor globalInterceptor;
+
+    @Value("${spring.redis.host}")
+    private String redisHost;
+
+    @Value("${spring.redis.port}")
+    private String redisPort;
 
     @Bean(name = {"shiroCache"})
     public CacheManager cacheManager() {
@@ -131,7 +135,10 @@ public class AutoConfiguration implements WebMvcConfigurer {
             if(cacheType.equalsIgnoreCase(SessionCacheType.MEMORY.getType())){
                 defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
             }else if(cacheType.equalsIgnoreCase(SessionCacheType.REDIS.getType())){
-                defaultWebSessionManager.setSessionDAO(this.shiroSessionDao);
+                RedisSessionDAO sessionDAO = new RedisSessionDAO();
+                sessionDAO.setRedisManager(redisManager());
+
+                defaultWebSessionManager.setSessionDAO(sessionDAO);
             }
         }
 
@@ -141,6 +148,14 @@ public class AutoConfiguration implements WebMvcConfigurer {
         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
 
         return defaultWebSessionManager;
+    }
+
+    @Bean
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost(redisHost + ":" + redisPort);
+        redisManager.setTimeout(0);
+        return redisManager;
     }
 
     @Bean
