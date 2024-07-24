@@ -17,4 +17,5 @@ public class TemplateProperties {
     private String rootContext;
     private String sessionTimeout;
     private String composeResource;
+    private String sessionCacheType;
 }

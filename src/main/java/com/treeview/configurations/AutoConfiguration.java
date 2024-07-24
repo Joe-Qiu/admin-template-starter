@@ -1,6 +1,7 @@
 package com.treeview.configurations;
 
 import com.google.gson.Gson;
+import com.treeview.enums.SessionCacheType;
 import com.treeview.interceptor.GlobalInterceptor;
 import com.treeview.shiro.SaasRealm;
 import com.treeview.shiro.ShiroSessionDao;
@@ -123,11 +124,15 @@ public class AutoConfiguration implements WebMvcConfigurer {
         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
         defaultWebSessionManager.setSessionIdCookie(new SimpleCookie("KSESSIONID"));
 
-        String configEnv = System.getProperty("config.env");
-        if (configEnv != null && !"test".equals(configEnv)) {
-            defaultWebSessionManager.setSessionDAO(this.shiroSessionDao);
-        } else {
-            defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
+        String cacheType = templateProperties.getSessionCacheType();
+
+        defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
+        if(StringUtils.isNotEmpty(cacheType)){
+            if(cacheType.equalsIgnoreCase(SessionCacheType.MEMORY.getType())){
+                defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
+            }else if(cacheType.equalsIgnoreCase(SessionCacheType.REDIS.getType())){
+                defaultWebSessionManager.setSessionDAO(this.shiroSessionDao);
+            }
         }
 
         //定义要使用的无效的Session定时调度器
