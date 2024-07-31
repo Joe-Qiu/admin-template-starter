@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class SuperController {
     @Resource
-    @Qualifier("gsonInst")
+    @Qualifier("gson")
     protected Gson gson;
 
     @Autowired

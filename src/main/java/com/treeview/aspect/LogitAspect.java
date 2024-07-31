@@ -25,7 +25,7 @@ import java.util.Date;
 @Component
 public class LogitAspect {
     @Resource
-    @Qualifier("gsonInst")
+    @Qualifier("gson")
     private Gson gson;
 
     @Resource

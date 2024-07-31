@@ -2,6 +2,7 @@ package com.treeview.configurations;
 
 import com.google.gson.Gson;
 import com.treeview.enums.SessionCacheType;
+import com.treeview.filter.LoggingFilter;
 import com.treeview.interceptor.GlobalInterceptor;
 import com.treeview.shiro.SaasRealm;
 import com.treeview.shiro.ShiroTagFreeMarkerConfigurer;
@@ -118,9 +119,9 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public SessionManager sessionManager() {
         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
-        if(NumberUtils.isDigits(templateProperties.getSessionTimeout())){
+        if (NumberUtils.isDigits(templateProperties.getSessionTimeout())) {
             defaultWebSessionManager.setGlobalSessionTimeout(Long.parseLong(templateProperties.getSessionTimeout()));
-        }else{
+        } else {
             defaultWebSessionManager.setGlobalSessionTimeout(30 * 60 * 1000L);
         }
         defaultWebSessionManager.setDeleteInvalidSessions(true);
@@ -131,10 +132,10 @@ public class AutoConfiguration implements WebMvcConfigurer {
         String cacheType = templateProperties.getSessionCacheType();
 
         defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
-        if(StringUtils.isNotEmpty(cacheType)){
-            if(cacheType.equalsIgnoreCase(SessionCacheType.MEMORY.getType())){
+        if (StringUtils.isNotEmpty(cacheType)) {
+            if (cacheType.equalsIgnoreCase(SessionCacheType.MEMORY.getType())) {
                 defaultWebSessionManager.setSessionDAO(new MemorySessionDAO());
-            }else if(cacheType.equalsIgnoreCase(SessionCacheType.REDIS.getType())){
+            } else if (cacheType.equalsIgnoreCase(SessionCacheType.REDIS.getType())) {
                 RedisSessionDAO sessionDAO = new RedisSessionDAO();
                 sessionDAO.setRedisManager(redisManager());
 
@@ -206,6 +207,13 @@ public class AutoConfiguration implements WebMvcConfigurer {
             }
         }
 
+        //日志拦截器
+        mapConfig.put("/**", "logging");
+
+        if(shiroFilterFactoryBean.getFilters() != null){
+            shiroFilterFactoryBean.getFilters().put("logging", new LoggingFilter());
+        }
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(mapConfig);
         return shiroFilterFactoryBean;
     }
@@ -268,10 +276,16 @@ public class AutoConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/static-gen/**").addResourceLocations("classpath:/static-gen/");
     }
 
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(globalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
+//        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**");
+//    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(globalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
-        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**");
+        registry.addInterceptor(globalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**").excludePathPatterns("/static-gen/**");
+        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**").excludePathPatterns("/static-gen/**");
     }
 
     @Bean
@@ -295,7 +309,7 @@ public class AutoConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public Gson gsonInst() {
+    public Gson gson() {
         return new Gson();
     }
 
@@ -305,9 +319,9 @@ public class AutoConfiguration implements WebMvcConfigurer {
         final List<String> bundles = new ArrayList();
         bundles.add("classpath:i18n/internation");
 
-        if(StringUtils.isNotEmpty(templateProperties.getComposeResource())){
+        if (StringUtils.isNotEmpty(templateProperties.getComposeResource())) {
             String[] resources = StringUtils.split(templateProperties.getComposeResource(), ";");
-            if(resources != null && resources.length > 0){
+            if (resources != null && resources.length > 0) {
                 Arrays.stream(resources).forEach((item) -> {
                     bundles.add("classpath:" + item);
                 });
