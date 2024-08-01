@@ -2,8 +2,8 @@ package com.treeview.configurations;
 
 import com.google.gson.Gson;
 import com.treeview.enums.SessionCacheType;
-import com.treeview.filter.LoggingFilter;
 import com.treeview.interceptor.GlobalInterceptor;
+import com.treeview.interceptor.LoggingInterceptor;
 import com.treeview.shiro.SaasRealm;
 import com.treeview.shiro.ShiroTagFreeMarkerConfigurer;
 import com.treeview.shiro.TemplateSessionValidationScheduler;
@@ -189,7 +189,7 @@ public class AutoConfiguration implements WebMvcConfigurer {
         shiroFilterFactoryBean.setSuccessUrl("/");
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/error/illegalAccess");
-        final Map<String, String> mapConfig = new HashMap(16);
+        final Map<String, String> mapConfig = new HashMap<>(16);
         mapConfig.put("/static/**", "anon");
         mapConfig.put("/logout", "logout");
         mapConfig.put("/login", "anon");
@@ -205,13 +205,6 @@ public class AutoConfiguration implements WebMvcConfigurer {
                     mapConfig.put(item, "anon");
                 });
             }
-        }
-
-        //日志拦截器
-        mapConfig.put("/**", "logging");
-
-        if(shiroFilterFactoryBean.getFilters() != null){
-            shiroFilterFactoryBean.getFilters().put("logging", new LoggingFilter());
         }
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(mapConfig);
@@ -252,7 +245,7 @@ public class AutoConfiguration implements WebMvcConfigurer {
             try {
                 locale = new Locale(localeStr.split("_")[0], localeStr.split("_")[1]);
             } catch (Exception e) {
-                locale = Locale.US;
+                log.error("Exception", e);
             }
         }
 
@@ -276,15 +269,10 @@ public class AutoConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/static-gen/**").addResourceLocations("classpath:/static-gen/");
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(globalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**");
-//        registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**");
-//    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(globalInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**").excludePathPatterns("/static-gen/**");
+        registry.addInterceptor(new LoggingInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**").excludePathPatterns("/static-gen/**");
         registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**").excludePathPatterns("/static/**").excludePathPatterns("/static-gen/**");
     }
 
@@ -316,7 +304,7 @@ public class AutoConfiguration implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        final List<String> bundles = new ArrayList();
+        final List<String> bundles = new ArrayList<>();
         bundles.add("classpath:i18n/internation");
 
         if (StringUtils.isNotEmpty(templateProperties.getComposeResource())) {
